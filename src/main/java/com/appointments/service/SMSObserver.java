@@ -12,5 +12,6 @@ public class SMSObserver implements Observer {
 
     private void sendSMS(String phone, String message) {
         System.out.println(" SMS sent to " + phone + ": " + message);
+        System.out.println("📱 SMS sent to " + phone + ": " + message);
     }
 }

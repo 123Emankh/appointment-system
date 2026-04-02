@@ -27,8 +27,9 @@ public class InMemoryRepository {
 
         // User
         User user = new User("eman", "1234", "User One", "user@example.com");
-        user.setPhoneNumber("+1234567890");
-        saveUser(user);
+        User user1 = new User("user1", "password", "User One", "user@example.com");
+        user1.setPhoneNumber("+1234567890");
+        saveUser(user1);
 
         // Sample slots
         LocalDateTime now = LocalDateTime.now();
@@ -95,5 +96,10 @@ public class InMemoryRepository {
 
     public void removeTimeSlot(TimeSlot slot) {
         availableSlots.remove(slot);
+    }
+    
+    public boolean isSlotOverlapping(TimeSlot newSlot) {
+        return availableSlots.stream()
+            .anyMatch(slot -> slot.isAvailable() && slot.overlaps(newSlot));
     }
 }

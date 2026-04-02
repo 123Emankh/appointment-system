@@ -29,6 +29,11 @@ public class TimeSlot {
     public long getDurationMinutes() {
         return java.time.Duration.between(start, end).toMinutes();
     }
+    
+    public boolean overlaps(TimeSlot other) {
+        return !(this.end.isBefore(other.start) || this.start.isAfter(other.end));
+    }
+    
 
     @Override
     public String toString() {

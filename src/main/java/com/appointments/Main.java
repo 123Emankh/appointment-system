@@ -276,11 +276,18 @@ public class Main {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             LocalDateTime start = LocalDateTime.parse(dateTimeStr, formatter);
             LocalDateTime end = start.plusHours(1);
-            TimeSlot slot = new TimeSlot(start, end);
-            appointmentService.addAvailableSlot(slot);
-            System.out.println("✅ Slot added successfully!");
+            TimeSlot newSlot = new TimeSlot(start, end);
+            
+            // Check for overlap with existing available slots
+            if (repository.isSlotOverlapping(newSlot)) {
+                System.out.println(" This time slot overlaps with an existing available slot. Please choose another time.");
+                return;
+            }
+            
+            appointmentService.addAvailableSlot(newSlot);
+            System.out.println(" Slot added successfully!");
         } catch (Exception e) {
-            System.out.println("❌ Invalid format. Please use yyyy-MM-dd HH:mm (e.g., 2026-04-12 10:00)");
+            System.out.println(" Invalid format. Please use yyyy-MM-dd HH:mm (e.g., 2026-04-12 10:00)");
         }
     }
 
