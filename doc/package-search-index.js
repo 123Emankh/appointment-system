@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.appointments"},{"l":"com.appointments.domain"},{"l":"com.appointments.persistence"},{"l":"com.appointments.service"}];updateSearchResults();

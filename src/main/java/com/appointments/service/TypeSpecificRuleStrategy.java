@@ -3,7 +3,24 @@ package com.appointments.service;
 import com.appointments.domain.Appointment;
 import java.time.LocalDateTime;
 
+/**
+ * Booking rule that enforces constraints based on appointment type.
+ * <ul>
+ *   <li>URGENT: must be scheduled within 24 hours</li>
+ *   <li>ASSESSMENT: must be during business hours (9:00 - 17:00)</li>
+ *   <li>FOLLOW_UP: no specific constraint (simplified)</li>
+ * </ul>
+ *
+ * @author Eman
+ * @version 1.0
+ */
 public class TypeSpecificRuleStrategy implements BookingRuleStrategy {
+    /**
+     * Validates type-specific constraints for the appointment.
+     *
+     * @param appointment the appointment to validate
+     * @return true if all type-specific rules are satisfied, false otherwise
+     */
     @Override
     public boolean isValid(Appointment appointment) {
         LocalDateTime now = LocalDateTime.now();
@@ -22,5 +39,11 @@ public class TypeSpecificRuleStrategy implements BookingRuleStrategy {
             default:
                 return true;
         }
+    }
+    
+    /**
+     * Default constructor.
+     */
+    public TypeSpecificRuleStrategy() {
     }
 }

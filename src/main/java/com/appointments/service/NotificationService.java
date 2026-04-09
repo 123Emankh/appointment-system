@@ -5,6 +5,10 @@ import com.appointments.domain.User;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Service responsible for managing and notifying observers.
+ * Implements the Observer pattern to notify multiple channels such as email and SMS.
+ */
 public class NotificationService {
     private List<Observer> observers;
     private boolean testMode;
@@ -14,8 +18,11 @@ public class NotificationService {
         this.observers = new ArrayList<>();
         this.sentMessages = new ArrayList<>();
         this.testMode = false;
-        // تسجيل المراقبين الافتراضيين
-        registerObserver(new EmailObserver());
+    }
+
+    public NotificationService(EmailService emailService) {
+        this();
+        registerObserver(new EmailObserver(emailService));
         registerObserver(new SMSObserver());
     }
 
@@ -27,19 +34,21 @@ public class NotificationService {
         observers.remove(observer);
     }
 
+    /**
+     * Notifies all registered observers with a NotificationMessage object.
+     */
     public void notifyObservers(User user, NotificationMessage message) {
-        String messageText = message.getContent();
         for (Observer observer : observers) {
-            observer.notify(user, messageText);
+            // في وضع الاختبار، نتجاهل الإيميلات
+            if (observer instanceof EmailObserver && testMode) {
+                continue;
+            }
+            observer.notify(user, message.getContent());
         }
-        if (testMode) {
-            sentMessages.add("send email to " + user.getName() + ": " + messageText);
-        }
-    }
 
-    // اختياري للتوافق
-    public void notifyObservers(User user, String message) {
-        notifyObservers(user, new NotificationMessage(message));
+        if (testMode) {
+            sentMessages.add("send email to " + user.getName() + ": " + message.getContent());
+        }
     }
 
     public void setTestMode(boolean testMode) {

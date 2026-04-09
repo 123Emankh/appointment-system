@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # -appointment-system
 # * Appointment Scheduling System *
 
@@ -5,6 +6,14 @@ A comprehensive appointment scheduling system built with Java and Maven, impleme
 
 # * Features *
 
+=======
+
+-appointment-system
+* Appointment Scheduling System *
+A comprehensive appointment scheduling system built with Java and Maven, implementing the Strategy and Observer design patterns. The system supports user authentication, appointment booking with business rules, notifications, and unit testing with JUnit and Mockito.
+
+* Features *
+>>>>>>> 347f1b7d878130a922d7c8c30f0669cffaaa14ae
 Authentication & Authorization: Separate login for administrators and regular users with different permission levels.
 
 Appointment Management: View available time slots, book appointments, modify or cancel existing ones (users can only manage their own; admins have full control).

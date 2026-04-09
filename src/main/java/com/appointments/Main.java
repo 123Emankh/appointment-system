@@ -8,32 +8,61 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
-
+/**
+ * Entry point of the Appointment Scheduling System.
+ * <p>
+ * This class handles system initialization, user interaction via console,
+ * authentication, and navigation between admin and user menus.
+ * It connects all services including authentication, appointments,
+ * and notifications.
+ * </p>
+ *
+ * @author Eman
+ * @version 1.0
+ */
 public class Main {
     private static AuthService authService;
     private static AppointmentService appointmentService;
     private static NotificationService notificationService;
     private static InMemoryRepository repository;
     private static Scanner scanner;
-
+    /**
+     * Main method that starts the application.
+     *
+     * @param args command line arguments
+     */
+    
     public static void main(String[] args) {
         initializeSystem();
         runApplication();
     }
-
+    /**
+     * Main method that starts the application.
+     *
+     * @param args command line arguments
+     */
     private static void initializeSystem() {
         scanner = new Scanner(System.in);
 
+        String gmailUser = "ekh9951@gmail.com";          // بريدك
+        String gmailAppPass = "crqw cxbe cnas lnpz\r\n"
+        		+ "";     // كلمة مرور التطبيق (App Password)
+
+        EmailService emailService = new EmailService(gmailUser, gmailAppPass);
+        NotificationService notificationService = new NotificationService(emailService);
+
         repository = new InMemoryRepository();
-        notificationService = new NotificationService();
         authService = new AuthService(repository);
         appointmentService = new AppointmentService(repository, notificationService);
 
-        // إضافة قواعد الحجز
-        appointmentService.addBookingRule(new DurationRuleStrategy(120)); // 120 دقيقة كحد أقصى
+        appointmentService.addBookingRule(new DurationRuleStrategy(120));
         appointmentService.addBookingRule(new ParticipantLimitStrategy());
         appointmentService.addBookingRule(new TypeSpecificRuleStrategy());
     }
+
+    /**
+     * Runs the main application loop and displays the main menu.
+     */
 
     private static void runApplication() {
         System.out.println("=== Appointment Scheduling System ===\n");
@@ -62,7 +91,9 @@ public class Main {
             }
         }
     }
-
+    /**
+     * Handles administrator login.
+     */
     private static void adminLogin() {
         System.out.print("Enter admin ID: ");
         String id = scanner.nextLine();
@@ -77,6 +108,9 @@ public class Main {
         }
     }
 
+    /**
+     * Handles user login.
+     */
     private static void userLogin() {
         System.out.print("Enter username: ");
         String username = scanner.nextLine();
@@ -91,7 +125,9 @@ public class Main {
             System.out.println("Invalid credentials!\n");
         }
     }
-
+    /**
+     * Displays the administrator menu and handles admin operations.
+     */
     private static void adminMenu() {
         while (true) {
             System.out.println("\n=== Administrator Menu ===");
@@ -131,7 +167,11 @@ public class Main {
             }
         }
     }
-
+    /**
+     * Displays the user menu and handles user operations.
+     *
+     * @param user the logged-in user
+     */
     private static void userMenu(User user) {
         while (true) {
             System.out.println("\n=== User Menu ===");
@@ -172,6 +212,10 @@ public class Main {
         }
     }
 
+    /**
+     * Displays all available appointment slots.
+     */
+    
     private static void viewAvailableSlots() {
         List<TimeSlot> slots = appointmentService.getAvailableSlots();
         if (slots.isEmpty()) {
@@ -186,6 +230,12 @@ public class Main {
         }
     }
 
+
+    /**
+     * Books an appointment for a given user.
+     *
+     * @param user the user booking the appointment
+     */
     private static void bookAppointment(User user) {
         List<TimeSlot> slots = appointmentService.getAvailableSlots();
         if (slots.isEmpty()) {
@@ -198,7 +248,6 @@ public class Main {
         int slotIndex = scanner.nextInt() - 1;
         scanner.nextLine();
 
-        // إذا أدخل المستخدم 0، نلغي العملية ونرجع
         if (slotIndex == -1) {
             System.out.println("Booking cancelled.");
             return;
@@ -214,7 +263,6 @@ public class Main {
             int typeChoice = scanner.nextInt();
             scanner.nextLine();
 
-            // إذا أدخل 0، نلغي
             if (typeChoice == 0) {
                 System.out.println("Booking cancelled.");
                 return;
@@ -235,7 +283,7 @@ public class Main {
 
             try {
                 appointmentService.bookAppointment(appointment);
-                System.out.println("✅ Appointment booked successfully!");
+                System.out.println(" Appointment booked successfully!");
             } catch (IllegalArgumentException e) {
                 System.out.println("❌ " + e.getMessage());
             }
@@ -244,6 +292,12 @@ public class Main {
         }
     }
 
+    /**
+     * Displays appointments of a specific user.
+     *
+     * @param user the user whose appointments are displayed
+     */
+    
     private static void viewUserAppointments(User user) {
         List<Appointment> appointments = appointmentService.getUserAppointments(user);
         if (appointments.isEmpty()) {
@@ -256,6 +310,9 @@ public class Main {
         }
     }
 
+    /**
+     * Displays all appointments in the system.
+     */
     private static void viewAllAppointments() {
         List<Appointment> appointments = appointmentService.getAllAppointments();
         if (appointments.isEmpty()) {
@@ -270,7 +327,7 @@ public class Main {
 
     private static void addAvailableSlot() {
         System.out.println("Enter new slot details (format: yyyy-MM-dd HH:mm): ");
-        scanner.nextLine(); // consume leftover newline
+        scanner.nextLine(); 
         String dateTimeStr = scanner.nextLine();
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -402,4 +459,38 @@ public class Main {
             System.out.println("❌ " + e.getMessage());
         }
     }
+    /**
+     * Private constructor to prevent instantiation of utility class.
+     */
+    private Main() {
+    }
+    
+
+/**
+ * For testing purposes - allows injecting a custom scanner
+ */
+public static void setScanner(Scanner testScanner) {
+    scanner = testScanner;
+}
+
+/**
+ * For testing purposes - resets the scanner to System.in
+ */
+public static void resetScanner() {
+    scanner = new Scanner(System.in);
+}
+
+/**
+ * For testing purposes - allows accessing the authService
+ */
+public static AuthService getAuthService() {
+    return authService;
+}
+
+/**
+ * For testing purposes - allows accessing the appointmentService
+ */
+public static AppointmentService getAppointmentService() {
+    return appointmentService;
+}
 }

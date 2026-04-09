@@ -3,12 +3,8 @@
 import com.appointments.persistence.InMemoryRepository;
 import com.appointments.domain.Administrator;
 
-/**
- * خدمة المصادقة.
- * @author فريقك
- * @version 1.0
- */
-/*public class AuthenticationService {
+
+public class AuthenticationService {
     private InMemoryRepository repo;
     private Administrator currentAdmin;
 

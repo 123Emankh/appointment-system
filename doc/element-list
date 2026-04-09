@@ -1,0 +1,4 @@
+com.appointments
+com.appointments.domain
+com.appointments.persistence
+com.appointments.service
