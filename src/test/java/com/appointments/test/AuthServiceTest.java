@@ -21,7 +21,8 @@ public class AuthServiceTest {
         User user = new User("user1", "1234", "Test User", "test@test.com");
         repo.saveUser(user);
 
-        Administrator admin = new Administrator("admin1", "admin123", "Admin Name");        repo.saveAdministrator(admin);
+        Administrator admin = new Administrator("admin1", "admin123", "Admin Name");    
+        repo.saveAdministrator(admin);
 
         authService = new AuthService(repo);
     }

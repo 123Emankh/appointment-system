@@ -44,13 +44,25 @@ public class Main {
     private static void initializeSystem() {
         scanner = new Scanner(System.in);
 
-        String gmailUser = "ekh9951@gmail.com";          // بريدك
-        String gmailAppPass = "crqw cxbe cnas lnpz\r\n"
-        		+ "";     // كلمة مرور التطبيق (App Password)
-
-        EmailService emailService = new EmailService(gmailUser, gmailAppPass);
+        // التحقق من وجود خاصية test.mode
+        boolean isTest = "true".equals(System.getProperty("test.mode"));
+        
+        EmailService emailService;
+        if (isTest) {
+            // في وضع الاختبار: خدمة إيميل وهمية لا تفعل شيئاً
+            emailService = new EmailService("dummy", "dummy") {
+                @Override
+                public void sendEmail(String to, String subject, String body) {
+                    // لا ترسل إيميل حقيقي
+                }
+            };
+        } else {
+            String gmailUser = "ekh9951@gmail.com";          
+            String gmailAppPass = "crqw cxbe cnas lnpz";
+            emailService = new EmailService(gmailUser, gmailAppPass);
+        }
+        
         NotificationService notificationService = new NotificationService(emailService);
-
         repository = new InMemoryRepository();
         authService = new AuthService(repository);
         appointmentService = new AppointmentService(repository, notificationService);

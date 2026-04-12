@@ -9,13 +9,11 @@ release.properties
 
 # Eclipse
 .settings/
-.project
-.classpath
+.env
 .idea/
 *.iml
 
-# NetBeans
-nb-configuration.xml
+
 
 # VS Code
 .vscode/

@@ -17,7 +17,7 @@ class UserTest {
         assertEquals("pass", user.getPassword());
         assertEquals("Eman", user.getName());
         assertEquals("eman@test.com", user.getEmail());
-        assertNull(user.getPhoneNumber()); // not set in constructor
+        assertNull(user.getPhoneNumber()); 
     }
 
     @Test

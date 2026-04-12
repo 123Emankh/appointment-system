@@ -14,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AppointmentTest {
 
-    // Helper method عشان نعمل User (عدّليه حسب كلاس User عندك)
     private User createUser() {
         return new User("U1", "1234", "Eman", "eman@test.com");
     }
@@ -91,7 +90,7 @@ class AppointmentTest {
     @Test
     void testDuration() {
         LocalDateTime start = LocalDateTime.now().plusHours(1);
-        LocalDateTime end = start.plusHours(2); // 2 hours
+        LocalDateTime end = start.plusHours(2); 
 
         TimeSlot slot = new TimeSlot(start, end);
         Appointment appt = new Appointment("1", createUser(), slot, AppointmentType.GROUP, "NEW");
@@ -123,7 +122,6 @@ class AppointmentTest {
         assertTrue(result.contains("Eman"));
     }
 
-    // test بسيط بس لرفع التغطية أكثر
     @Test
     void justRun() {
         Appointment appt = new Appointment("X", createUser(), createFutureTimeSlot(), AppointmentType.GROUP, "NEW");

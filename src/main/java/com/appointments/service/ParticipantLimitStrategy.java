@@ -33,7 +33,8 @@ public class ParticipantLimitStrategy implements BookingRuleStrategy {
             case IN_PERSON:
                 return participantCount <= 5;
             case VIRTUAL:
-                return true; // no limit
+                return true; 
+            
             default:
                 return participantCount <= 5;
         }

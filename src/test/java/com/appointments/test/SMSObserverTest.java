@@ -17,7 +17,7 @@ class SMSObserverTest {
 
         observer.notify(user, "Hi");
 
-        assertTrue(true); // no exception = pass (console output is side-effect)
+        assertTrue(true); 
     }
 
     @Test

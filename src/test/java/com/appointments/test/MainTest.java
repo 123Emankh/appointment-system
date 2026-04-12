@@ -1,7 +1,14 @@
 package com.appointments.test;
 
 import com.appointments.Main;
+//import com.appointments.domain.Appointment;
+//import com.appointments.domain.AppointmentType;
+//import com.appointments.domain.TimeSlot;
+//import com.appointments.domain.User;
+//import com.appointments.service.AppointmentService;
+
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,7 +16,26 @@ import org.junit.jupiter.api.Test;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.lang.reflect.Field;
+//import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+
+
+
+import com.appointments.domain.*;
+
+import java.time.LocalDateTime;
+import java.util.Scanner;
+import java.util.UUID;
+import org.mockito.Mockito;
+
+import com.appointments.service.AppointmentService;
+import com.appointments.service.EmailService;
+import com.appointments.service.NotificationService;
+
+
+
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,9 +45,47 @@ class MainCompleteTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
 
+    
+    static class DummyEmailService extends EmailService {
+        public DummyEmailService() {
+            super("dummy", "dummy");
+        }
+        
+        @Override
+        public void sendEmail(String to, String subject, String body) {
+            System.out.println("[TEST] Would send email to " + to + " but suppressed.");
+        }
+    }
+    @BeforeAll
+    static void enableTestMode() {
+        System.setProperty("test.mode", "true");
+    }
+    
+    @BeforeAll
+    static void suppressEmails() throws Exception {
+        EmailService dummy = new EmailService("dummy", "dummy") {
+            @Override
+            public void sendEmail(String to, String subject, String body) {
+            }
+        };
+        NotificationService dummyNotification = new NotificationService(dummy);
+        
+        Field field = Main.class.getDeclaredField("notificationService");
+        field.setAccessible(true);
+        field.set(null, dummyNotification);
+    }
+    
+    
     @BeforeEach
-    void setUp() {
+    void setUp() throws Exception {
         System.setOut(new PrintStream(outContent));
+        
+        EmailService dummyEmailService = new DummyEmailService();
+        NotificationService dummyNotificationService = new NotificationService(dummyEmailService);
+        
+        Field field = Main.class.getDeclaredField("notificationService");
+        field.setAccessible(true);
+        field.set(null, dummyNotificationService);
     }
 
     @AfterEach
@@ -39,7 +103,6 @@ class MainCompleteTest {
         return outContent.toString();
     }
 
-    // ==================== اختبارات القائمة الرئيسية ====================
 
     @Test
     @DisplayName("Exit application")
@@ -57,7 +120,6 @@ class MainCompleteTest {
         assertTrue(getOutput().contains("Invalid option!"));
     }
 
-    // ==================== اختبارات تسجيل الدخول ====================
 
     @Test
     @DisplayName("Admin login wrong credentials")
@@ -95,7 +157,6 @@ class MainCompleteTest {
         assertTrue(output.contains("Logged out"));
     }
 
-    // ==================== اختبارات عرض البيانات ====================
 
     @Test
     @DisplayName("Admin view available slots")
@@ -133,7 +194,6 @@ class MainCompleteTest {
         assertTrue(output.contains("All Appointments") || output.contains("No appointments found"));
     }
 
-    // ==================== اختبارات الخيارات غير الصالحة ====================
 
     @Test
     @DisplayName("Invalid admin menu option")
@@ -159,7 +219,6 @@ class MainCompleteTest {
         assertTrue(getOutput().contains("Invalid option!"));
     }
 
-    // ==================== اختبارات بدون مواعيد ====================
 
     @Test
     @DisplayName("Admin cancel - no appointments")
@@ -193,7 +252,6 @@ class MainCompleteTest {
         assertTrue(getOutput().contains("You have no appointments to modify"));
     }
 
-    // ==================== اختبارات التنقل المتعدد ====================
 
     @Test
     @DisplayName("Admin multiple views")
@@ -215,7 +273,6 @@ class MainCompleteTest {
         assertTrue(output.contains("Your appointments") || output.contains("You have no appointments"));
     }
 
-    // ==================== اختبارات Reflection للدوال الخاصة ====================
 
     @Test
     @DisplayName("Test viewAvailableSlots private method")
@@ -235,4 +292,144 @@ class MainCompleteTest {
         String output = getOutput();
         assertTrue(output.contains("No appointments found") || output.contains("All Appointments"));
     }
+    
+  ///-----
+
+    
+    @Test
+    @DisplayName("Add available slot - success")
+    void testAddAvailableSlotSuccess() throws Exception {
+        String input = "\n2026-12-25 10:00\n";
+        Scanner testScanner = new Scanner(input);
+        Main.setScanner(testScanner);
+        
+        Method method = Main.class.getDeclaredMethod("addAvailableSlot");
+        method.setAccessible(true);
+        method.invoke(null);
+        
+        String output = getOutput();
+        assertTrue(output.contains("Slot added successfully!"));
+    }
+
+    @Test
+    @DisplayName("Add available slot - invalid format")
+    void testAddAvailableSlotInvalidFormat() throws Exception {
+        String input = "\ninvalid-date\n";
+        Scanner testScanner = new Scanner(input);
+        Main.setScanner(testScanner);
+        
+        Method method = Main.class.getDeclaredMethod("addAvailableSlot");
+        method.setAccessible(true);
+        method.invoke(null);
+        
+        assertTrue(getOutput().contains("Invalid format"));
+    }
+    
+
+    
+    @Test
+    @DisplayName("Book appointment - success")
+    void testBookAppointmentSuccess() throws Exception {
+        AppointmentService service = Main.getAppointmentService();
+        TimeSlot slot = new TimeSlot(
+            LocalDateTime.of(2026, 12, 25, 10, 0),
+            LocalDateTime.of(2026, 12, 25, 11, 0)
+        );
+        service.addAvailableSlot(slot);
+        
+        String input = "1\n1\n";   
+        Scanner testScanner = new Scanner(input);
+        Main.setScanner(testScanner);
+        
+        User user = Main.getAuthService().authenticateUser("user1", "password");
+        
+        Method method = Main.class.getDeclaredMethod("bookAppointment", User.class);
+        method.setAccessible(true);
+        method.invoke(null, user);
+        
+        assertTrue(getOutput().contains("Appointment booked successfully!"));
+    }
+
+  
+    @Test
+    @DisplayName("Book appointment - user cancels")
+    void testBookAppointmentCancel() throws Exception {
+        AppointmentService service = Main.getAppointmentService();
+        TimeSlot slot = new TimeSlot(
+            LocalDateTime.of(2026, 12, 25, 10, 0),
+            LocalDateTime.of(2026, 12, 25, 11, 0)
+        );
+        service.addAvailableSlot(slot);
+        
+        String input = "0\n";
+        Scanner testScanner = new Scanner(input);
+        Main.setScanner(testScanner);
+        
+        User user = Main.getAuthService().authenticateUser("user1", "password");
+        Method method = Main.class.getDeclaredMethod("bookAppointment", User.class);
+        method.setAccessible(true);
+        method.invoke(null, user);
+        
+        assertTrue(getOutput().contains("Booking cancelled."));
+    }
+    
+    @Test
+    @DisplayName("Modify appointment (admin) - success")
+    void testModifyAppointmentSuccess() throws Exception {
+        AppointmentService service = Main.getAppointmentService();
+        TimeSlot originalSlot = new TimeSlot(LocalDateTime.of(2026, 12, 25, 10, 0), LocalDateTime.of(2026, 12, 25, 11, 0));
+        service.addAvailableSlot(originalSlot);
+        User user = Main.getAuthService().authenticateUser("user1", "password");
+        Appointment apt = new Appointment(UUID.randomUUID().toString(), user, originalSlot, AppointmentType.INDIVIDUAL, "Confirmed");
+        service.bookAppointment(apt);
+        
+        TimeSlot newSlot = new TimeSlot(LocalDateTime.of(2026, 12, 26, 10, 0), LocalDateTime.of(2026, 12, 26, 11, 0));
+        service.addAvailableSlot(newSlot);
+        
+        String input = apt.getId() + "\n1\n";   // slot index 1 (second slot)
+        Scanner testScanner = new Scanner(input);
+        Main.setScanner(testScanner);
+        
+        Method method = Main.class.getDeclaredMethod("modifyAppointment");
+        method.setAccessible(true);
+        method.invoke(null);
+        
+        assertTrue(getOutput().contains("Appointment modified successfully!"));
+    }
+    
+    @Test
+    @DisplayName("Cancel appointment (admin) - success")
+    void testCancelAppointmentSuccess() throws Exception {
+        AppointmentService service = Main.getAppointmentService();
+        TimeSlot slot = new TimeSlot(LocalDateTime.of(2026, 12, 25, 10, 0), LocalDateTime.of(2026, 12, 25, 11, 0));
+        service.addAvailableSlot(slot);
+        User user = Main.getAuthService().authenticateUser("user1", "password");
+        Appointment apt = new Appointment(UUID.randomUUID().toString(), user, slot, AppointmentType.INDIVIDUAL, "Confirmed");
+        service.bookAppointment(apt);
+        
+        String input = apt.getId() + "\n";
+        Scanner testScanner = new Scanner(input);
+        Main.setScanner(testScanner);
+        
+        Method method = Main.class.getDeclaredMethod("cancelAppointment");
+        method.setAccessible(true);
+        method.invoke(null);
+        
+        assertTrue(getOutput().contains("Appointment cancelled successfully!"));
+    }
+    
+    @Test
+    @DisplayName("Test helper methods for coverage")
+    void testHelperMethods() {
+        assertNotNull(Main.getAuthService());
+        assertNotNull(Main.getAppointmentService());
+        
+        Scanner original = new Scanner(System.in);
+        Main.setScanner(original);
+        Main.resetScanner();
+        assertTrue(true);
+    }
+    
+   
+    
 }

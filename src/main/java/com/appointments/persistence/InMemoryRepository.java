@@ -49,7 +49,6 @@ public class InMemoryRepository {
         user1.setPhoneNumber("+1234567890");
         saveUser(user1);
 
-        // Sample slots
         LocalDateTime now = LocalDateTime.now();
         addAvailableTimeSlot(new TimeSlot(now.plusDays(1).withHour(10), now.plusDays(1).withHour(11)));
         addAvailableTimeSlot(new TimeSlot(now.plusDays(1).withHour(11), now.plusDays(1).withHour(12)));
@@ -207,4 +206,5 @@ public class InMemoryRepository {
         return availableSlots.stream()
             .anyMatch(slot -> slot.isAvailable() && slot.overlaps(newSlot));
     }
+   
 }

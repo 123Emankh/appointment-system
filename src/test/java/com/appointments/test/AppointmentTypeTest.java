@@ -35,7 +35,6 @@ class AppointmentTypeTest {
         assertEquals("GROUP", AppointmentType.GROUP.name());
     }
 
-    // بس للتغطية
     @Test
     void justRun() {
         for (AppointmentType type : AppointmentType.values()) {

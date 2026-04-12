@@ -37,7 +37,6 @@ class SchedulingServiceTest {
         );
     }
 
-    // ==================== اختبارات viewAvailableSlots ====================
 
     @Test
     @DisplayName("Should return available slots")
@@ -64,7 +63,6 @@ class SchedulingServiceTest {
         verify(repo, times(1)).getAvailableSlots();
     }
 
-    // ==================== اختبارات bookAppointment ====================
 
     @Test
     @DisplayName("Should book appointment successfully")
@@ -119,7 +117,6 @@ class SchedulingServiceTest {
         assertFalse(testSlot.isAvailable());
     }
 
-    // ==================== اختبارات modifyAppointment ====================
 
     @Test
     @DisplayName("Should modify appointment successfully")
@@ -176,7 +173,6 @@ class SchedulingServiceTest {
         verify(newSlot, never()).setAvailable(false);
     }
 
-    // ==================== اختبارات cancelAppointment ====================
 
     @Test
     @DisplayName("Should cancel appointment successfully")
@@ -221,7 +217,6 @@ class SchedulingServiceTest {
         verify(repo, never()).removeAppointment(anyString());
     }
 
-    // ==================== اختبارات notificationService ====================
 
     @Test
     @DisplayName("Should work without notification service")

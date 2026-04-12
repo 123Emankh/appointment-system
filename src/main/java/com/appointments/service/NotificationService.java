@@ -38,7 +38,17 @@ public class NotificationService {
      * Notifies all registered observers with a NotificationMessage object.
      */
     public void notifyObservers(User user, NotificationMessage message) {
-        for (Observer observer : observers) {
+    	 if (user == null) {
+    	        System.err.println("Cannot notify: User is null");
+    	        return;
+    	    }
+    	    
+    	    if (message == null) {
+    	        System.err.println("Cannot notify: Message is null");
+    	        return;
+    	    }
+    	    
+    	for (Observer observer : observers) {
             // في وضع الاختبار، نتجاهل الإيميلات
             if (observer instanceof EmailObserver && testMode) {
                 continue;

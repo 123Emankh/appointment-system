@@ -16,9 +16,8 @@ class TimeSlotTest {
         return new TimeSlot(start, end);
     }
 
-    // اصلاح: اجعل slot2 منفصلة تماماً عن slot1
     private TimeSlot createSlot2() {
-        LocalDateTime start = LocalDateTime.now().plusHours(4);  // تغيير من 2 إلى 4
+        LocalDateTime start = LocalDateTime.now().plusHours(4);  
         LocalDateTime end = start.plusHours(2);
         return new TimeSlot(start, end);
     }
@@ -81,8 +80,8 @@ class TimeSlotTest {
 
     @Test
     void testOverlapsFalse() {
-        TimeSlot slot1 = createSlot1();  // 1:00 - 3:00
-        TimeSlot slot2 = createSlot2();  // 4:00 - 6:00 (منفصلة)
+        TimeSlot slot1 = createSlot1();  
+        TimeSlot slot2 = createSlot2();  
 
         assertFalse(slot1.overlaps(slot2));
     }

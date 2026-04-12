@@ -16,7 +16,6 @@ class EmailServiceTest {
 
     @BeforeEach
     void setUp() {
-        // استخدام بيانات وهمية - لن يتم إرسال بريد فعلي
         emailService = new EmailService("test@gmail.com", "fake-password");
     }
 
@@ -29,8 +28,6 @@ class EmailServiceTest {
     @Test
     @DisplayName("Should throw exception when sending with invalid credentials")
     void testSendEmailWithInvalidCredentials() {
-        // هذا الاختبار سيفشل لأنه يحاول الاتصال فعلياً
-        // ولكننا نختبر أن الاستثناء يرمى
         assertThrows(RuntimeException.class, () -> {
             emailService.sendEmail("test@example.com", "Test Subject", "Test Body");
         });

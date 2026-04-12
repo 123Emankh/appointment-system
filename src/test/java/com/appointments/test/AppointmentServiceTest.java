@@ -26,7 +26,7 @@ class AppointmentServiceTest {
     @BeforeEach
     void setUp() {
         repository = new InMemoryRepository();
-        repository.clearAllData(); // مسح البيانات التجريبية
+        repository.clearAllData(); 
         
         notificationService = mock(NotificationService.class);
         appointmentService = new AppointmentService(repository, notificationService);
@@ -71,7 +71,7 @@ class AppointmentServiceTest {
     @Test
     void testBookAppointmentSlotNotAvailable() {
         TimeSlot slot = createSlot(10);
-        slot.setAvailable(false); // الفترة غير متاحة
+        slot.setAvailable(false); 
         Appointment appointment = createAppointment(slot);
         
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
@@ -100,7 +100,7 @@ class AppointmentServiceTest {
     void testModifyAppointmentNewSlotNotAvailable() {
         TimeSlot oldSlot = createSlot(10);
         TimeSlot newSlot = createSlot(11);
-        newSlot.setAvailable(false); // الفترة الجديدة غير متاحة
+        newSlot.setAvailable(false); 
         
         appointmentService.addAvailableSlot(oldSlot);
         Appointment appointment = createAppointment(oldSlot);

@@ -79,7 +79,6 @@ class DurationRuleStrategyTest {
     @Test
     @DisplayName("Should work with different duration limits")
     void testDifferentLimits() {
-        // Limit 30 minutes
         DurationRuleStrategy strategy30 = new DurationRuleStrategy(30);
         Appointment app30min = createAppointmentWithDuration(30);
         Appointment app31min = createAppointmentWithDuration(31);
@@ -87,7 +86,6 @@ class DurationRuleStrategyTest {
         assertTrue(strategy30.isValid(app30min), "30 min appointment should be valid for 30 min limit");
         assertFalse(strategy30.isValid(app31min), "31 min appointment should be invalid for 30 min limit");
         
-        // Limit 240 minutes (4 hours)
         DurationRuleStrategy strategy240 = new DurationRuleStrategy(240);
         Appointment app240min = createAppointmentWithDuration(240);
         Appointment app241min = createAppointmentWithDuration(241);
@@ -119,15 +117,12 @@ class DurationRuleStrategyTest {
         TimeSlot slot = new TimeSlot(start, end);
         String id = UUID.randomUUID().toString();
         
-        // Test with GROUP type
         Appointment groupApp = new Appointment(id, testUser, slot, AppointmentType.GROUP, "SCHEDULED");
         assertTrue(strategy.isValid(groupApp), "GROUP appointment within limit should be valid");
         
-        // Test with IN_PERSON type
         Appointment inPersonApp = new Appointment(id + "1", testUser, slot, AppointmentType.IN_PERSON, "SCHEDULED");
         assertTrue(strategy.isValid(inPersonApp), "IN_PERSON appointment within limit should be valid");
         
-        // Test with VIRTUAL type
         Appointment virtualApp = new Appointment(id + "2", testUser, slot, AppointmentType.VIRTUAL, "SCHEDULED");
         assertTrue(strategy.isValid(virtualApp), "VIRTUAL appointment within limit should be valid");
     }

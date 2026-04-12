@@ -25,11 +25,9 @@ class InMemoryRepositoryTest {
     void testConstructorInitialData() {
         InMemoryRepository repo = new InMemoryRepository();
 
-        // should have sample admin and users
         assertNotNull(repo.findAdministrator("admin"));
         assertNotNull(repo.findUser("eman"));
 
-        // sample slots exist and available
         assertTrue(repo.getAvailableSlots().size() > 0);
     }
 
