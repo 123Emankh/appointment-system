@@ -1,31 +1,88 @@
-<<<<<<< HEAD
-# -appointment-system
-# * Appointment Scheduling System *
+# 🗓️ Appointment Scheduling System
 
-A comprehensive appointment scheduling system built with Java and Maven, implementing the Strategy and Observer design patterns. The system supports user authentication, appointment booking with business rules, notifications, and unit testing with JUnit and Mockito.
+## 📋 Project Overview
 
-# * Features *
+A comprehensive appointment scheduling system built with Java and Maven, implementing the Strategy and Observer design patterns.  
+The system supports user authentication, appointment booking with business rules, notifications, and unit testing with JUnit and Mockito.
 
-=======
+---
 
--appointment-system
-* Appointment Scheduling System *
-A comprehensive appointment scheduling system built with Java and Maven, implementing the Strategy and Observer design patterns. The system supports user authentication, appointment booking with business rules, notifications, and unit testing with JUnit and Mockito.
+## ✨ Features
 
-* Features *
->>>>>>> 347f1b7d878130a922d7c8c30f0669cffaaa14ae
-Authentication & Authorization: Separate login for administrators and regular users with different permission levels.
+### 🔐 Authentication & Authorization
+Separate login for administrators and regular users with different permission levels.
 
-Appointment Management: View available time slots, book appointments, modify or cancel existing ones (users can only manage their own; admins have full control).
+---
 
-Flexible Booking Rules: Enforce duration limits, participant caps, and type-specific rules using the Strategy pattern.
+### 📅 Appointment Management
+- View available time slots  
+- Book appointments  
+- Modify or cancel existing ones  
+- Users can only manage their own appointments  
+- Admins have full control  
 
-Multiple Appointment Types: Support for individual, group, virtual, in-person, urgent, follow-up, and assessment appointments.
+---
 
-Notification System: Automatic reminders and status updates sent via email and SMS (with mockable services for testing) using the Observer pattern.
+### 📏 Flexible Booking Rules
+Enforce:
+- Duration limits  
+- Participant caps  
+- Type-specific rules using Strategy Pattern  
 
-In-Memory Persistence: Simple repository implementation for easy testing and prototyping (can be replaced with a real database).
+---
 
-Fully Documented: All classes, methods, and fields include Javadoc comments.
+### 🧾 Multiple Appointment Types
+- Individual  
+- Group  
+- Virtual  
+- In-person  
+- Urgent  
+- Follow-up  
+- Assessment  
 
-Unit Testing: Comprehensive test suite using JUnit 5 and Mockito, with code coverage reports via JaCoCo.
+---
+
+### 🔔 Notification System
+Automatic reminders and status updates sent via email and SMS using Observer Pattern (with mockable services for testing).
+
+---
+
+### 💾 In-Memory Persistence
+Temporary storage using an in-memory repository for testing and development purposes.
+
+---
+
+### 📖 Fully Documented
+All classes, methods, and fields include Javadoc comments.
+
+---
+
+### 🧪 Unit Testing
+Built with JUnit 5 and Mockito, with JaCoCo coverage reports.
+
+---
+
+## 🛠️ Tech Stack
+
+- Java 17  
+- Maven  
+- JUnit 5  
+- Mockito  
+- JaCoCo  
+- OOP + Design Patterns  
+
+---
+
+## 🧠 Design Patterns
+
+### Strategy Pattern
+Used for booking rules (duration, participants, type validation)
+
+### Observer Pattern
+Used for notification system (Email / SMS / Mock notifications)
+
+---
+
+## 👨‍💻 Author
+
+* Eman Khatatbeh & Shereen Hasan * 

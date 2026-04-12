@@ -9,10 +9,15 @@ release.properties
 
 # Eclipse
 .settings/
+
 .env
 .idea/
 *.iml
 
+echo .env >> .gitignore
+git add .gitignore
+git commit -m "Ensure .env is ignored"
+git push origin main
 
 
 # VS Code
