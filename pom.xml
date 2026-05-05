@@ -13,7 +13,11 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
-
+         
+<properties>
+  <sonar.organization>eman-org</sonar.organization>
+</properties>
+         
     <dependencies>
     
 
