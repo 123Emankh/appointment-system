@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>User.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">appointment-system</a> &gt; <a href="index.source.html" class="el_package">com.appointments.domain</a> &gt; <span class="el_source">User.java</span></div><h1>User.java</h1><pre class="source lang-java linenums">package com.appointments.domain;
+
+/**
+ * Represents a user in the appointment system.
+ * &lt;p&gt;
+ * A user contains basic authentication information along with personal details
+ * such as name, email, and phone number.
+ * &lt;/p&gt;
+ *
+ * @author Eman
+ * @version 1.0
+ */
+public class User {
+
+    private String username;
+    private String password;
+    private String name;
+    private String email;
+    private String phoneNumber;
+
+    /**
+     * Constructs a new User instance.
+     *
+     * @param username the unique username of the user
+     * @param password the password for authentication
+     * @param name the full name of the user
+     * @param email the email address of the user
+     */
+<span class="fc" id="L29">    public User(String username, String password, String name, String email) {</span>
+<span class="fc" id="L30">        this.username = username;</span>
+<span class="fc" id="L31">        this.password = password;</span>
+<span class="fc" id="L32">        this.name = name;</span>
+<span class="fc" id="L33">        this.email = email;</span>
+<span class="fc" id="L34">    }</span>
+
+    /**
+     * Returns the username of the user.
+     *
+     * @return the username
+     */
+<span class="fc" id="L41">    public String getUsername() { return username; }</span>
+
+    /**
+     * Sets the username of the user.
+     *
+     * @param username the new username
+     */
+<span class="fc" id="L48">    public void setUsername(String username) { this.username = username; }</span>
+
+    /**
+     * Returns the password of the user.
+     *
+     * @return the password
+     */
+<span class="fc" id="L55">    public String getPassword() { return password; }</span>
+
+    /**
+     * Sets the password of the user.
+     *
+     * @param password the new password
+     */
+<span class="fc" id="L62">    public void setPassword(String password) { this.password = password; }</span>
+
+    /**
+     * Returns the name of the user.
+     *
+     * @return the full name
+     */
+<span class="fc" id="L69">    public String getName() { return name; }</span>
+
+    /**
+     * Sets the name of the user.
+     *
+     * @param name the new full name
+     */
+<span class="fc" id="L76">    public void setName(String name) { this.name = name; }</span>
+
+    /**
+     * Returns the email of the user.
+     *
+     * @return the email address
+     */
+<span class="fc" id="L83">    public String getEmail() { return email; }</span>
+
+    /**
+     * Sets the email of the user.
+     *
+     * @param email the new email address
+     */
+<span class="fc" id="L90">    public void setEmail(String email) { this.email = email; }</span>
+
+    /**
+     * Returns the phone number of the user.
+     *
+     * @return the phone number
+     */
+<span class="fc" id="L97">    public String getPhoneNumber() { return phoneNumber; }</span>
+
+    /**
+     * Sets the phone number of the user.
+     *
+     * @param phoneNumber the new phone number
+     */
+<span class="fc" id="L104">    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }</span>
+
+    /**
+     * Compares this user with another object for equality based on username.
+     *
+     * @param obj the object to compare with
+     * @return true if usernames are equal, false otherwise
+     */
+    @Override
+    public boolean equals(Object obj) {
+<span class="fc bfc" id="L114" title="All 2 branches covered.">        if (this == obj) return true;</span>
+<span class="pc bpc" id="L115" title="2 of 4 branches missed.">        if (obj == null || getClass() != obj.getClass()) return false;</span>
+<span class="fc" id="L116">        User user = (User) obj;</span>
+<span class="pc bpc" id="L117" title="3 of 4 branches missed.">        return username != null ? username.equals(user.username) : user.username == null;</span>
+    }
+
+    /**
+     * Returns the hash code of the user based on username.
+     *
+     * @return hash code value
+     */
+    @Override
+    public int hashCode() {
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">        return username != null ? username.hashCode() : 0;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

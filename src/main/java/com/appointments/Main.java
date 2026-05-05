@@ -4,7 +4,6 @@ import com.appointments.domain.*;
 import com.appointments.persistence.InMemoryRepository;
 import com.appointments.service.*;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
@@ -12,7 +11,7 @@ import java.util.UUID;
  * Entry point of the Appointment Scheduling System.
  * <p>
  * This class handles system initialization, user interaction via console,
- * authentication, and navigation between admin and user menus.
+ *authentication, and navigation between admin and user menus.
  * It connects all services including authentication, appointments,
  * and notifications.
  * </p>
@@ -23,9 +22,10 @@ import java.util.UUID;
 public class Main {
     private static AuthService authService;
     private static AppointmentService appointmentService;
-    private static NotificationService notificationService;
     private static InMemoryRepository repository;
     private static Scanner scanner;
+    private static NotificationService notificationService;
+
     /**
      * Main method that starts the application.
      *
@@ -44,16 +44,13 @@ public class Main {
     private static void initializeSystem() {
         scanner = new Scanner(System.in);
 
-        // التحقق من وجود خاصية test.mode
         boolean isTest = "true".equals(System.getProperty("test.mode"));
         
         EmailService emailService;
         if (isTest) {
-            // في وضع الاختبار: خدمة إيميل وهمية لا تفعل شيئاً
             emailService = new EmailService("dummy", "dummy") {
                 @Override
                 public void sendEmail(String to, String subject, String body) {
-                    // لا ترسل إيميل حقيقي
                 }
             };
         } else {
@@ -62,7 +59,8 @@ public class Main {
             emailService = new EmailService(gmailUser, gmailAppPass);
         }
         
-        NotificationService notificationService = new NotificationService(emailService);
+       // NotificationService notificationService = new NotificationService(emailService);
+        notificationService = new NotificationService(emailService);
         repository = new InMemoryRepository();
         authService = new AuthService(repository);
         appointmentService = new AppointmentService(repository, notificationService);
@@ -347,7 +345,6 @@ public class Main {
             LocalDateTime end = start.plusHours(1);
             TimeSlot newSlot = new TimeSlot(start, end);
             
-            // Check for overlap with existing available slots
             if (repository.isSlotOverlapping(newSlot)) {
                 System.out.println(" This time slot overlaps with an existing available slot. Please choose another time.");
                 return;

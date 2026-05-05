@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AuthService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">appointment-system</a> &gt; <a href="index.source.html" class="el_package">com.appointments.service</a> &gt; <span class="el_source">AuthService.java</span></div><h1>AuthService.java</h1><pre class="source lang-java linenums">package com.appointments.service;
+
+import com.appointments.domain.Administrator;
+import com.appointments.domain.User;
+import com.appointments.persistence.InMemoryRepository;
+
+/**
+ * Service responsible for authentication of users and administrators.
+ *
+ * @author Eman
+ * @version 1.0
+ */
+public class AuthService {
+
+    private InMemoryRepository repository;
+    private User currentUser;
+    private Administrator currentAdmin;
+
+    /**
+     * Constructs the AuthService.
+     *
+     * @param repository the data repository
+     */
+<span class="fc" id="L24">    public AuthService(InMemoryRepository repository) {</span>
+<span class="fc" id="L25">        this.repository = repository;</span>
+<span class="fc" id="L26">    }</span>
+
+    /**
+     * Authenticates an administrator.
+     *
+     * @param adminId admin ID
+     * @param password password
+     * @return true if authentication is successful
+     */
+    public boolean authenticateAdmin(String adminId, String password) {
+<span class="fc" id="L36">        Administrator admin = repository.findAdministrator(adminId);</span>
+<span class="fc bfc" id="L37" title="All 4 branches covered.">        if (admin != null &amp;&amp; admin.getPassword().equals(password)) {</span>
+<span class="fc" id="L38">            currentAdmin = admin;</span>
+<span class="fc" id="L39">            currentUser = null;</span>
+<span class="fc" id="L40">            return true;</span>
+        }
+<span class="fc" id="L42">        return false;</span>
+    }
+
+    /**
+     * Authenticates a user.
+     *
+     * @param username username
+     * @param password password
+     * @return the authenticated user or null if failed
+     */
+    public User authenticateUser(String username, String password) {
+<span class="fc" id="L53">        User user = repository.findUser(username);</span>
+<span class="fc bfc" id="L54" title="All 4 branches covered.">        if (user != null &amp;&amp; user.getPassword().equals(password)) {</span>
+<span class="fc" id="L55">            currentUser = user;</span>
+<span class="fc" id="L56">            currentAdmin = null;</span>
+<span class="fc" id="L57">            return user;</span>
+        }
+<span class="fc" id="L59">        return null;</span>
+    }
+
+    /**
+     * Logs out the current user/admin.
+     */
+    public void logout() {
+<span class="fc" id="L66">        currentUser = null;</span>
+<span class="fc" id="L67">        currentAdmin = null;</span>
+<span class="fc" id="L68">    }</span>
+
+    
+    /**
+     * Checks if the currently logged-in user is an administrator.
+     *
+     * @return true if an administrator is logged in, false otherwise
+     */
+    public boolean isAdmin() {
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        return currentAdmin != null;</span>
+    }
+
+    /**
+     * Returns the currently logged-in regular user, or null if none.
+     *
+     * @return the current User, or null
+     */
+    public User getCurrentUser() {
+<span class="fc" id="L86">        return currentUser;</span>
+    }
+
+    /**
+     * Returns the currently logged-in administrator, or null if none.
+     *
+     * @return the current Administrator, or null
+     */
+    public Administrator getCurrentAdmin() {
+<span class="fc" id="L95">        return currentAdmin;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

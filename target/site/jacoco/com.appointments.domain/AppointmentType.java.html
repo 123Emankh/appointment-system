@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AppointmentType.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">appointment-system</a> &gt; <a href="index.source.html" class="el_package">com.appointments.domain</a> &gt; <span class="el_source">AppointmentType.java</span></div><h1>AppointmentType.java</h1><pre class="source lang-java linenums">package com.appointments.domain;
+
+/**
+ * Enumeration representing the different types of appointments supported by the system.
+ * Each type may have specific rules for duration, participant limits, and scheduling constraints.
+ *
+ * @author Eman 
+ * @version 1.0
+ */
+<span class="fc" id="L10">public enum AppointmentType {</span>
+    /** Urgent appointment that must be scheduled within 24 hours. */
+<span class="fc" id="L12">    URGENT,</span>
+    /** Follow-up appointment, typically requires a previous appointment. */
+<span class="fc" id="L14">    FOLLOW_UP,</span>
+    /** Assessment appointment, usually requires business hours (9-17). */
+<span class="fc" id="L16">    ASSESSMENT,</span>
+    /** Virtual appointment conducted online. */
+<span class="fc" id="L18">    VIRTUAL,</span>
+    /** In-person appointment at a physical location. */
+<span class="fc" id="L20">    IN_PERSON,</span>
+    /** Individual appointment for a single participant. */
+<span class="fc" id="L22">    INDIVIDUAL,</span>
+    /** Group appointment allowing multiple participants. */
+<span class="fc" id="L24">    GROUP</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

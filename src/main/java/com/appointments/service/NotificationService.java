@@ -49,7 +49,6 @@ public class NotificationService {
     	    }
     	    
     	for (Observer observer : observers) {
-            // في وضع الاختبار، نتجاهل الإيميلات
             if (observer instanceof EmailObserver && testMode) {
                 continue;
             }

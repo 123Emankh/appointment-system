@@ -27,6 +27,10 @@ class AdministratorTest {
         assertEquals("MANAGER", admin.getRole());
     }
 
+    
+    
+    
+    
     @Test
     void justRunForCoverage() {
         Administrator admin = new Administrator("X", "pass", "Test");

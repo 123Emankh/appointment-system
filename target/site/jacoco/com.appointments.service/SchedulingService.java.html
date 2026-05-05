@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SchedulingService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">appointment-system</a> &gt; <a href="index.source.html" class="el_package">com.appointments.service</a> &gt; <span class="el_source">SchedulingService.java</span></div><h1>SchedulingService.java</h1><pre class="source lang-java linenums">package com.appointments.service;
+
+import com.appointments.persistence.InMemoryRepository;
+import com.appointments.domain.Appointment;
+import com.appointments.domain.AppointmentType;
+import com.appointments.domain.TimeSlot;
+import com.appointments.domain.User;
+import com.appointments.domain.NotificationMessage;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
+
+/**
+ * Service class that handles scheduling operations including viewing available slots,
+ * booking, modifying, and cancelling appointments.
+ * This service uses an in-memory repository and a notification service.
+ *
+ * @author Eman
+ * @version 1.0
+ */
+public class SchedulingService {
+    private InMemoryRepository repo;
+    private NotificationService notificationService;
+
+    /**
+     * Constructs a SchedulingService with the given repository and notification service.
+     *
+     * @param repo                the in-memory repository for data access
+     * @param notificationService the notification service for sending alerts
+     */
+<span class="fc" id="L32">    public SchedulingService(InMemoryRepository repo, NotificationService notificationService) {</span>
+<span class="fc" id="L33">        this.repo = repo;</span>
+<span class="fc" id="L34">        this.notificationService = notificationService;</span>
+<span class="fc" id="L35">    }</span>
+
+    /**
+     * Returns a list of all currently available time slots.
+     *
+     * @return list of available TimeSlot objects
+     */
+    public List&lt;TimeSlot&gt; viewAvailableSlots() {
+<span class="fc" id="L43">        return repo.getAvailableSlots();</span>
+    }
+
+    /**
+     * Books an appointment for a user after validating all booking rules.
+     *
+     * @param user      the user booking the appointment
+     * @param timeSlot  the desired time slot
+     * @param type      the type of appointment
+     * @param rules     list of booking rules to validate against
+     * @throws IllegalArgumentException if any rule fails or the slot is not available
+     */
+    public void bookAppointment(User user, TimeSlot timeSlot, AppointmentType type, List&lt;BookingRuleStrategy&gt; rules) {
+<span class="fc" id="L56">        Appointment appointment = new Appointment(</span>
+<span class="fc" id="L57">            UUID.randomUUID().toString(),</span>
+            user,
+            timeSlot,
+            type,
+            &quot;Confirmed&quot;
+        );
+
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">        for (BookingRuleStrategy rule : rules) {</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">            if (!rule.isValid(appointment)) {</span>
+<span class="nc" id="L66">                throw new IllegalArgumentException(&quot; Rule violation:: &quot; + rule.getClass().getSimpleName());</span>
+            }
+<span class="nc" id="L68">        }</span>
+
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        if (!timeSlot.isAvailable()) {</span>
+<span class="fc" id="L71">            throw new IllegalArgumentException(&quot; The slot is unavailable &quot;);</span>
+        }
+
+<span class="fc" id="L74">        timeSlot.setAvailable(false);</span>
+<span class="fc" id="L75">        repo.saveAppointment(appointment);</span>
+
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        if (notificationService != null) {</span>
+<span class="fc" id="L78">            String msg = &quot;Reminder of your appointment at&quot; + timeSlot.getStart();</span>
+<span class="fc" id="L79">            notificationService.notifyObservers(user, new NotificationMessage(msg));</span>
+        }
+<span class="fc" id="L81">    }</span>
+
+    /**
+     * Modifies an existing appointment to a new time slot.
+     * Only future appointments can be modified.
+     *
+     * @param appId   the ID of the appointment to modify
+     * @param newSlot the new time slot for the appointment
+     */
+    public void modifyAppointment(String appId, TimeSlot newSlot) {
+<span class="fc" id="L91">        Appointment app = repo.findAppointment(appId);</span>
+<span class="fc bfc" id="L92" title="All 4 branches covered.">        if (app != null &amp;&amp; app.getTimeSlot().getStart().isAfter(LocalDateTime.now())) {</span>
+<span class="fc" id="L93">            app.getTimeSlot().setAvailable(true);</span>
+<span class="fc" id="L94">            app.setTimeSlot(newSlot);</span>
+<span class="fc" id="L95">            newSlot.setAvailable(false);</span>
+
+<span class="fc bfc" id="L97" title="All 2 branches covered.">            if (notificationService != null) {</span>
+<span class="fc" id="L98">                String msg = &quot;Your appointment has been changed to &quot; + newSlot.getStart();</span>
+<span class="fc" id="L99">                notificationService.notifyObservers(app.getUser(), new NotificationMessage(msg));</span>
+            }
+        }
+<span class="fc" id="L102">    }</span>
+
+    /**
+     * Cancels an existing appointment.
+     * Only future appointments can be cancelled.
+     *
+     * @param appId the ID of the appointment to cancel
+     */
+    public void cancelAppointment(String appId) {
+<span class="fc" id="L111">        Appointment app = repo.findAppointment(appId);</span>
+<span class="fc bfc" id="L112" title="All 4 branches covered.">        if (app != null &amp;&amp; app.getTimeSlot().getStart().isAfter(LocalDateTime.now())) {</span>
+<span class="fc" id="L113">            app.getTimeSlot().setAvailable(true);</span>
+<span class="fc" id="L114">            repo.removeAppointment(appId);</span>
+
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">            if (notificationService != null) {</span>
+<span class="fc" id="L117">                String msg = &quot;Your appointment has been cancelled&quot;;</span>
+<span class="fc" id="L118">                notificationService.notifyObservers(app.getUser(), new NotificationMessage(msg));</span>
+            }
+        }
+<span class="fc" id="L121">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

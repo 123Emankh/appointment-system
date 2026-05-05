@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AppointmentService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">appointment-system</a> &gt; <a href="index.source.html" class="el_package">com.appointments.service</a> &gt; <span class="el_source">AppointmentService.java</span></div><h1>AppointmentService.java</h1><pre class="source lang-java linenums">package com.appointments.service;
+
+import com.appointments.domain.*;
+import com.appointments.persistence.InMemoryRepository;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Service responsible for managing appointments.
+ * &lt;p&gt;
+ * It handles booking, modification, cancellation, and validation of appointments
+ * using a set of booking rules and integrates with the notification system.
+ * &lt;/p&gt;
+ *
+ * @author Eman
+ * @version 1.0
+ */
+public class AppointmentService {
+
+    private InMemoryRepository repository;
+    private NotificationService notificationService;
+    private List&lt;BookingRuleStrategy&gt; bookingRules;
+
+    /**
+     * Constructs the AppointmentService.
+     *
+     * @param repository the data repository
+     * @param notificationService the notification service
+     */
+<span class="fc" id="L30">    public AppointmentService(InMemoryRepository repository, NotificationService notificationService) {</span>
+<span class="fc" id="L31">        this.repository = repository;</span>
+<span class="fc" id="L32">        this.notificationService = notificationService;</span>
+<span class="fc" id="L33">        this.bookingRules = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L34">    }</span>
+
+    /**
+     * Adds a booking validation rule.
+     *
+     * @param rule the booking rule to add
+     */
+    public void addBookingRule(BookingRuleStrategy rule) {
+<span class="fc" id="L42">        bookingRules.add(rule);</span>
+<span class="fc" id="L43">    }</span>
+
+    /**
+     * Returns all available time slots.
+     *
+     * @return list of available slots
+     */
+    public List&lt;TimeSlot&gt; getAvailableSlots() {
+<span class="fc" id="L51">        return repository.getAvailableSlots();</span>
+    }
+
+    /**
+     * Adds a new available time slot.
+     *
+     * @param slot the time slot to add
+     */
+    public void addAvailableSlot(TimeSlot slot) {
+<span class="fc" id="L60">        repository.addAvailableTimeSlot(slot);</span>
+<span class="fc" id="L61">    }</span>
+
+    /**
+     * Books an appointment after validating all rules.
+     *
+     * @param appointment the appointment to book
+     * @throws IllegalArgumentException if any booking rule is violated
+     */
+    public void bookAppointment(Appointment appointment) {
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        for (BookingRuleStrategy rule : bookingRules) {</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">            if (!rule.isValid(appointment)) {</span>
+<span class="nc" id="L72">                throw new IllegalArgumentException(&quot;Booking rule violated: &quot; + rule.getClass().getSimpleName());</span>
+            }
+<span class="fc" id="L74">        }</span>
+
+<span class="fc" id="L76">        TimeSlot slot = appointment.getTimeSlot();</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        if (!slot.isAvailable()) {</span>
+<span class="fc" id="L78">            throw new IllegalArgumentException(&quot;Time slot is not available.&quot;);</span>
+        }
+
+<span class="fc" id="L81">        slot.setAvailable(false);</span>
+<span class="fc" id="L82">        repository.saveAppointment(appointment);</span>
+
+<span class="fc" id="L84">        String msg = &quot; reminder of your appointment at&quot; + slot.getStart();</span>
+<span class="fc" id="L85">        notificationService.notifyObservers(appointment.getUser(), new NotificationMessage(msg));</span>
+<span class="fc" id="L86">    }</span>
+
+    /**
+     * Modifies an existing appointment to a new time slot.
+     *
+     * @param appointmentId the appointment ID
+     * @param newSlot the new time slot
+     * @throws IllegalArgumentException if appointment is not found or invalid
+     */
+    public void modifyAppointment(String appointmentId, TimeSlot newSlot) {
+<span class="fc" id="L96">        Appointment appointment = repository.findAppointment(appointmentId);</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">        if (appointment == null) {</span>
+<span class="fc" id="L98">            throw new IllegalArgumentException(&quot;Appointment not found.&quot;);</span>
+        }
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">        if (!appointment.isFuture()) {</span>
+<span class="nc" id="L101">            throw new IllegalArgumentException(&quot;Cannot modify past appointments.&quot;);</span>
+        }
+<span class="fc bfc" id="L103" title="All 2 branches covered.">        if (!newSlot.isAvailable()) {</span>
+<span class="fc" id="L104">            throw new IllegalArgumentException(&quot;New time slot is not available.&quot;);</span>
+        }
+
+<span class="fc" id="L107">        appointment.getTimeSlot().setAvailable(true);</span>
+<span class="fc" id="L108">        appointment.setTimeSlot(newSlot);</span>
+<span class="fc" id="L109">        newSlot.setAvailable(false);</span>
+
+<span class="fc" id="L111">        String msg = &quot;Your appointment has been changed to &quot; + newSlot.getStart();</span>
+<span class="fc" id="L112">        notificationService.notifyObservers(appointment.getUser(), new NotificationMessage(msg));</span>
+<span class="fc" id="L113">    }</span>
+
+    /**
+     * Cancels an appointment.
+     *
+     * @param appointmentId the appointment ID
+     * @param requester the user requesting cancellation
+     */
+    public void cancelAppointment(String appointmentId, User requester) {
+<span class="fc" id="L122">        Appointment appointment = repository.findAppointment(appointmentId);</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">        if (appointment == null) {</span>
+<span class="fc" id="L124">            throw new IllegalArgumentException(&quot;Appointment not found.&quot;);</span>
+        }
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">        if (!appointment.isFuture()) {</span>
+<span class="nc" id="L127">            throw new IllegalArgumentException(&quot;Cannot cancel past appointments.&quot;);</span>
+        }
+<span class="pc bpc" id="L129" title="1 of 4 branches missed.">        if (requester != null &amp;&amp; !appointment.getUser().equals(requester)) {</span>
+<span class="nc" id="L130">            throw new IllegalArgumentException(&quot;You can only cancel your own appointments.&quot;);</span>
+        }
+
+<span class="fc" id="L133">        appointment.getTimeSlot().setAvailable(true);</span>
+<span class="fc" id="L134">        repository.removeAppointment(appointmentId);</span>
+
+<span class="fc" id="L136">        String msg = &quot;Cancel your appointment  &quot;;</span>
+<span class="fc" id="L137">        notificationService.notifyObservers(appointment.getUser(), new NotificationMessage(msg));</span>
+<span class="fc" id="L138">    }</span>
+    /**
+     * Retrieves all appointments from the repository.
+     *
+     * @return a list of all appointments
+     */
+    public List&lt;Appointment&gt; getAllAppointments() {
+<span class="fc" id="L145">        return repository.getAllAppointments();</span>
+    }
+    /**
+     * Retrieves all appointments belonging to a specific user.
+     *
+     * @param user the user whose appointments to retrieve
+     * @return a list of appointments for the given user
+     */
+    public List&lt;Appointment&gt; getUserAppointments(User user) {
+<span class="fc" id="L154">        return repository.getUserAppointments(user);</span>
+    }
+
+    /**
+     * Finds an appointment by its unique identifier.
+     *
+     * @param id the appointment ID
+     * @return the appointment if found, null otherwise
+     */
+    public Appointment findAppointment(String id) {
+<span class="fc" id="L164">        return repository.findAppointment(id);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

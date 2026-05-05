@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import com.appointments.domain.Appointment;
 import com.appointments.domain.AppointmentType;
-import com.appointments.test.TestDataFactory;
 import com.appointments.service.TypeSpecificRuleStrategy;
 
 import java.time.LocalDateTime;

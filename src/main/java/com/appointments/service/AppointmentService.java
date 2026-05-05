@@ -2,7 +2,6 @@ package com.appointments.service;
 
 import com.appointments.domain.*;
 import com.appointments.persistence.InMemoryRepository;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

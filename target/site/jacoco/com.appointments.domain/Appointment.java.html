@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Appointment.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">appointment-system</a> &gt; <a href="index.source.html" class="el_package">com.appointments.domain</a> &gt; <span class="el_source">Appointment.java</span></div><h1>Appointment.java</h1><pre class="source lang-java linenums">package com.appointments.domain;
+
+import java.time.LocalDateTime;
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Represents an appointment in the system.
+ * &lt;p&gt;
+ * An appointment contains information about the user, time slot,
+ * type, status, participants, and creation time.
+ * &lt;/p&gt;
+ *
+ * @author Eman
+ * @version 1.0
+ */
+public class Appointment {
+
+    private String id;
+    private User user;
+    private TimeSlot timeSlot;
+    private AppointmentType type;
+    private String status;
+    private List&lt;User&gt; participants;
+    private LocalDateTime createdAt;
+
+    /**
+     * Constructs a new Appointment.
+     *
+     * @param id the unique identifier of the appointment
+     * @param user the owner user of the appointment
+     * @param timeSlot the scheduled time slot
+     * @param type the type of the appointment
+     * @param status the current status of the appointment
+     */
+<span class="fc" id="L37">    public Appointment(String id, User user, TimeSlot timeSlot, AppointmentType type, String status) {</span>
+<span class="fc" id="L38">        this.id = id;</span>
+<span class="fc" id="L39">        this.user = user;</span>
+<span class="fc" id="L40">        this.timeSlot = timeSlot;</span>
+<span class="fc" id="L41">        this.type = type;</span>
+<span class="fc" id="L42">        this.status = status;</span>
+<span class="fc" id="L43">        this.participants = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L44">        this.participants.add(user);</span>
+<span class="fc" id="L45">        this.createdAt = LocalDateTime.now();</span>
+<span class="fc" id="L46">    }</span>
+
+    /**
+     * Returns the appointment ID.
+     *
+     * @return the appointment ID
+     */
+<span class="fc" id="L53">    public String getId() { return id; }</span>
+
+    /**
+     * Sets the appointment ID.
+     *
+     * @param id the new appointment ID
+     */
+<span class="fc" id="L60">    public void setId(String id) { this.id = id; }</span>
+
+    /**
+     * Returns the owner user of the appointment.
+     *
+     * @return the user
+     */
+<span class="fc" id="L67">    public User getUser() { return user; }</span>
+
+    /**
+     * Sets the owner user of the appointment.
+     *
+     * @param user the new user
+     */
+<span class="fc" id="L74">    public void setUser(User user) { this.user = user; }</span>
+
+    /**
+     * Returns the time slot of the appointment.
+     *
+     * @return the timeSlot
+     */
+<span class="fc" id="L81">    public TimeSlot getTimeSlot() { return timeSlot; }</span>
+
+    /**
+     * Sets the time slot of the appointment.
+     *
+     * @param timeSlot the new time slot
+     */
+<span class="fc" id="L88">    public void setTimeSlot(TimeSlot timeSlot) { this.timeSlot = timeSlot; }</span>
+
+    /**
+     * Returns the type of the appointment.
+     *
+     * @return the appointment type
+     */
+<span class="fc" id="L95">    public AppointmentType getType() { return type; }</span>
+
+    /**
+     * Sets the type of the appointment.
+     *
+     * @param type the new appointment type
+     */
+<span class="fc" id="L102">    public void setType(AppointmentType type) { this.type = type; }</span>
+
+    /**
+     * Returns the status of the appointment.
+     *
+     * @return the status
+     */
+<span class="fc" id="L109">    public String getStatus() { return status; }</span>
+
+    /**
+     * Sets the status of the appointment.
+     *
+     * @param status the new status
+     */
+<span class="fc" id="L116">    public void setStatus(String status) { this.status = status; }</span>
+
+    /**
+     * Returns the list of participants in the appointment.
+     *
+     * @return list of participants
+     */
+<span class="fc" id="L123">    public List&lt;User&gt; getParticipants() { return participants; }</span>
+
+    /**
+     * Adds a participant to the appointment.
+     *
+     * @param participant the user to add
+     */
+<span class="fc" id="L130">    public void addParticipant(User participant) { this.participants.add(participant); }</span>
+
+    /**
+     * Returns the creation time of the appointment.
+     *
+     * @return the creation timestamp
+     */
+<span class="fc" id="L137">    public LocalDateTime getCreatedAt() { return createdAt; }</span>
+
+    /**
+     * Checks if the appointment is scheduled in the future.
+     *
+     * @return true if the appointment is in the future, false otherwise
+     */
+    public boolean isFuture() {
+<span class="fc" id="L145">        return timeSlot.getStart().isAfter(LocalDateTime.now());</span>
+    }
+
+    /**
+     * Returns the duration of the appointment in hours.
+     *
+     * @return duration in hours
+     */
+    public long getDurationHours() {
+<span class="fc" id="L154">        return Duration.between(timeSlot.getStart(), timeSlot.getEnd()).toHours();</span>
+    }
+
+    /**
+     * Returns the duration of the appointment in minutes.
+     *
+     * @return duration in minutes
+     */
+    public long getDurationMinutes() {
+<span class="fc" id="L163">        return Duration.between(timeSlot.getStart(), timeSlot.getEnd()).toMinutes();</span>
+    }
+
+    /**
+     * Returns the maximum number of participants allowed based on appointment type.
+     *
+     * @return maximum number of participants
+     */
+    public int getMaxParticipants() {
+<span class="pc bpc" id="L172" title="1 of 5 branches missed.">        switch (type) {</span>
+<span class="fc" id="L173">            case GROUP: return 10;</span>
+<span class="fc" id="L174">            case INDIVIDUAL: return 1;</span>
+<span class="fc" id="L175">            case IN_PERSON: return 5;</span>
+<span class="fc" id="L176">            case VIRTUAL: return Integer.MAX_VALUE;</span>
+<span class="nc" id="L177">            default: return 1;</span>
+        }
+    }
+
+    /**
+     * Returns a string representation of the appointment.
+     *
+     * @return formatted appointment details
+     */
+    @Override
+    public String toString() {
+<span class="fc" id="L188">        return String.format(&quot;Appointment{id='%s', user=%s, type=%s, time=%s, status='%s'}&quot;,</span>
+<span class="fc" id="L189">            id, user.getName(), type, timeSlot, status);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

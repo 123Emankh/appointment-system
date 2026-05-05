@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NotificationService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">appointment-system</a> &gt; <a href="index.source.html" class="el_package">com.appointments.service</a> &gt; <span class="el_source">NotificationService.java</span></div><h1>NotificationService.java</h1><pre class="source lang-java linenums">package com.appointments.service;
+
+import com.appointments.domain.NotificationMessage;
+import com.appointments.domain.User;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Service responsible for managing and notifying observers.
+ * Implements the Observer pattern to notify multiple channels such as email and SMS.
+ */
+public class NotificationService {
+    private List&lt;Observer&gt; observers;
+    private boolean testMode;
+    private List&lt;String&gt; sentMessages;
+
+<span class="fc" id="L17">    public NotificationService() {</span>
+<span class="fc" id="L18">        this.observers = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L19">        this.sentMessages = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L20">        this.testMode = false;</span>
+<span class="fc" id="L21">    }</span>
+
+    public NotificationService(EmailService emailService) {
+<span class="fc" id="L24">        this();</span>
+<span class="fc" id="L25">        registerObserver(new EmailObserver(emailService));</span>
+<span class="fc" id="L26">        registerObserver(new SMSObserver());</span>
+<span class="fc" id="L27">    }</span>
+
+    public void registerObserver(Observer observer) {
+<span class="fc" id="L30">        observers.add(observer);</span>
+<span class="fc" id="L31">    }</span>
+
+    public void removeObserver(Observer observer) {
+<span class="fc" id="L34">        observers.remove(observer);</span>
+<span class="fc" id="L35">    }</span>
+
+    /**
+     * Notifies all registered observers with a NotificationMessage object.
+     */
+    public void notifyObservers(User user, NotificationMessage message) {
+<span class="pc bpc" id="L41" title="1 of 2 branches missed.">    	 if (user == null) {</span>
+<span class="nc" id="L42">    	        System.err.println(&quot;Cannot notify: User is null&quot;);</span>
+<span class="nc" id="L43">    	        return;</span>
+    	    }
+    	    
+<span class="pc bpc" id="L46" title="1 of 2 branches missed.">    	    if (message == null) {</span>
+<span class="nc" id="L47">    	        System.err.println(&quot;Cannot notify: Message is null&quot;);</span>
+<span class="nc" id="L48">    	        return;</span>
+    	    }
+    	    
+<span class="fc bfc" id="L51" title="All 2 branches covered.">    	for (Observer observer : observers) {</span>
+<span class="fc bfc" id="L52" title="All 4 branches covered.">            if (observer instanceof EmailObserver &amp;&amp; testMode) {</span>
+<span class="fc" id="L53">                continue;</span>
+            }
+<span class="fc" id="L55">            observer.notify(user, message.getContent());</span>
+<span class="fc" id="L56">        }</span>
+
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        if (testMode) {</span>
+<span class="fc" id="L59">            sentMessages.add(&quot;send email to &quot; + user.getName() + &quot;: &quot; + message.getContent());</span>
+        }
+<span class="fc" id="L61">    }</span>
+
+    public void setTestMode(boolean testMode) {
+<span class="fc" id="L64">        this.testMode = testMode;</span>
+<span class="fc" id="L65">    }</span>
+
+    public List&lt;String&gt; getSentMessages() {
+<span class="fc" id="L68">        return new ArrayList&lt;&gt;(sentMessages);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

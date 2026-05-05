@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import com.appointments.domain.User;
 import com.appointments.service.SMSObserver;
-import com.appointments.test.TestDataFactory;
 
 class SMSObserverTest {
 

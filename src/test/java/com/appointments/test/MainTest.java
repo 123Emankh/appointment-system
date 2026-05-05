@@ -1,11 +1,7 @@
 package com.appointments.test;
 
 import com.appointments.Main;
-//import com.appointments.domain.Appointment;
-//import com.appointments.domain.AppointmentType;
-//import com.appointments.domain.TimeSlot;
-//import com.appointments.domain.User;
-//import com.appointments.service.AppointmentService;
+
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -17,7 +13,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.lang.reflect.Field;
-//import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 
@@ -27,7 +22,6 @@ import com.appointments.domain.*;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 import java.util.UUID;
-import org.mockito.Mockito;
 
 import com.appointments.service.AppointmentService;
 import com.appointments.service.EmailService;
@@ -44,7 +38,7 @@ class MainCompleteTest {
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
-
+    private NotificationService notificationService;
     
     static class DummyEmailService extends EmailService {
         public DummyEmailService() {

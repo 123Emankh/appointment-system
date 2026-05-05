@@ -10,7 +10,7 @@ import com.appointments.domain.User;
 public class EmailObserver implements Observer {
     private final EmailService emailService;
 
-    public EmailObserver(EmailService emailService) {  // <-- أضف هذا المنشئ
+    public EmailObserver(EmailService emailService) {  
         this.emailService = emailService;
     }
 

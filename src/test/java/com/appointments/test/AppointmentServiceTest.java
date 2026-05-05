@@ -28,7 +28,7 @@ class AppointmentServiceTest {
         repository = new InMemoryRepository();
         repository.clearAllData(); 
         
-        notificationService = mock(NotificationService.class);
+        notificationService = mock(NotificationService.class);  ///////
         appointmentService = new AppointmentService(repository, notificationService);
         testUser = new User("testuser", "pass", "Test User", "test@example.com");
         repository.saveUser(testUser);

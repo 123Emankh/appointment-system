@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import com.appointments.domain.NotificationMessage;
 
-import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
