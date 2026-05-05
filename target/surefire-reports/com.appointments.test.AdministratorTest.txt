@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.appointments.test.AdministratorTest
 -------------------------------------------------------------------------------
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.201 s -- in com.appointments.test.AdministratorTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.195 s -- in com.appointments.test.AdministratorTest
