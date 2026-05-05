@@ -9,14 +9,16 @@
     <artifactId>appointment-system</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
-    <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-    </properties>
-         
-<properties>
-  <sonar.organization>eman-org</sonar.organization>
+  <properties>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+
+    <sonar.organization>eman-org</sonar.organization>
+    <sonar.projectKey>eman-org_appointment-system</sonar.projectKey>
+    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+    <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 </properties>
+
          
     <dependencies>
     
