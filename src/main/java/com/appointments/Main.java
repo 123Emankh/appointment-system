@@ -26,7 +26,7 @@ public class Main {
     private static InMemoryRepository repository;
     private static Scanner scanner;
     private static NotificationService notificationService;
-    private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
+
     /**
      * Main method that starts the application.
      *
@@ -78,10 +78,10 @@ public class Main {
         System.out.println("=== Appointment Scheduling System ===\n");
 
         while (true) {
-        	LOGGER.info("1. Login as Administrator\n");
-        	LOGGER.info("2. Login as User\n");
-        	LOGGER.info("3. Exit\n");
-        	LOGGER.info("Choose option: \n");
+            System.out.println("1. Login as Administrator");
+            System.out.println("2. Login as User");
+            System.out.println("3. Exit");
+            System.out.print("Choose option: ");
 
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -94,10 +94,11 @@ public class Main {
                     userLogin();
                     break;
                 case 3:
-                	LOGGER.warning("Goodbye!");
+                    System.out.println("Goodbye!");
                     return;
                 default:
-                	LOGGER.warning("Invalid option!");            }
+                    System.out.println("Invalid option!");
+            }
         }
     }
     /**
@@ -110,10 +111,10 @@ public class Main {
         String password = scanner.nextLine();
 
         if (authService.authenticateAdmin(id, password)) {
-        	LOGGER.info("Login successful!");
+            System.out.println("Login successful!\n");
             adminMenu();
         } else {
-        	LOGGER.info("Invalid credentials!");
+            System.out.println("Invalid credentials!\n");
         }
     }
 
@@ -139,14 +140,14 @@ public class Main {
      */
     private static void adminMenu() {
         while (true) {
-        	LOGGER.info("\n=== Administrator Menu ===");
-        	LOGGER.info("1. View all appointments");
-        	LOGGER.info("2. View available slots");
-        	LOGGER.info("3. Add available slot");
-        	LOGGER.info("4. Modify appointment");
-        	LOGGER.info("5. Cancel appointment");
-        	LOGGER.info("6. Logout");
-        	LOGGER.info("Choose option: ");
+            System.out.println("\n=== Administrator Menu ===");
+            System.out.println("1. View all appointments");
+            System.out.println("2. View available slots");
+            System.out.println("3. Add available slot");
+            System.out.println("4. Modify appointment");
+            System.out.println("5. Cancel appointment");
+            System.out.println("6. Logout");
+            System.out.print("Choose option: ");
 
             int choice = scanner.nextInt();
             scanner.nextLine();
