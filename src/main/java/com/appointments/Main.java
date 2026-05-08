@@ -59,7 +59,6 @@ public class Main {
             emailService = new EmailService(gmailUser, gmailAppPass);
         }
         
-       // NotificationService notificationService = new NotificationService(emailService);
         notificationService = new NotificationService(emailService);
         repository = new InMemoryRepository();
         authService = new AuthService(repository);
