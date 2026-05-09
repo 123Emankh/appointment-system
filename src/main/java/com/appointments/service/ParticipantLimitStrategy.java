@@ -15,6 +15,7 @@ import com.appointments.domain.Appointment;
  * @version 1.0
  */
 public class ParticipantLimitStrategy implements BookingRuleStrategy {
+
     /**
      * Validates that the number of participants does not exceed the limit for the appointment type.
      *
@@ -23,22 +24,25 @@ public class ParticipantLimitStrategy implements BookingRuleStrategy {
      */
     @Override
     public boolean isValid(Appointment appointment) {
+
         int participantCount = appointment.getParticipants().size();
-        
+
         switch (appointment.getType()) {
+
             case GROUP:
                 return participantCount <= 10;
+
             case INDIVIDUAL:
                 return participantCount <= 1;
+
             case IN_PERSON:
                 return participantCount <= 5;
+
             case VIRTUAL:
-                return true; 
-            
+                return true;
+
             default:
                 return participantCount <= 5;
         }
     }
-   
-   
 }
