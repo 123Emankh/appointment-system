@@ -472,6 +472,9 @@ public class Main {
      * Private constructor to prevent instantiation of utility class.
      */
     private Main() {
+    	
+        // Utility class - prevent instantiation
+
     }
     
 
