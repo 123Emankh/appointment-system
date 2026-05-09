@@ -24,6 +24,7 @@ public class Main {
     private static AppointmentService appointmentService;
     private static InMemoryRepository repository;
     private static Scanner scanner;
+    private static NotificationService notificationService;
 
     /**
      * Main method that starts the application.
@@ -57,8 +58,8 @@ public class Main {
             String gmailAppPass = "crqw cxbe cnas lnpz";
             emailService = new EmailService(gmailUser, gmailAppPass);
         }
-        NotificationService notificationService =
-                new NotificationService(emailService);
+        
+        notificationService = new NotificationService(emailService);
         repository = new InMemoryRepository();
         authService = new AuthService(repository);
         appointmentService = new AppointmentService(repository, notificationService);
