@@ -39,9 +39,6 @@ public class ParticipantLimitStrategy implements BookingRuleStrategy {
                 return participantCount <= 5;
         }
     }
-    /**
-     * Default constructor.
-     */
-    public ParticipantLimitStrategy() {
-    }
+   
+   
 }
