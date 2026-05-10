@@ -49,9 +49,10 @@ public class Main {
         EmailService emailService;
         if (isTest) {
             emailService = new EmailService("dummy", "dummy") {
-                @Override
-                public void sendEmail(String to, String subject, String body) {
-                }
+            	@Override
+            	public void sendEmail(String to, String subject, String body) {
+            	    // Disabled during test mode to avoid sending real emails
+            	}
             };
         } else {
             String gmailUser = "ekh9951@gmail.com";          
