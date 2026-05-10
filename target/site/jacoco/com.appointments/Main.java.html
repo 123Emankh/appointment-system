@@ -59,123 +59,122 @@ public class Main {
 <span class="nc" id="L59">            emailService = new EmailService(gmailUser, gmailAppPass);</span>
         }
         
-       // NotificationService notificationService = new NotificationService(emailService);
-<span class="fc" id="L63">        notificationService = new NotificationService(emailService);</span>
-<span class="fc" id="L64">        repository = new InMemoryRepository();</span>
-<span class="fc" id="L65">        authService = new AuthService(repository);</span>
-<span class="fc" id="L66">        appointmentService = new AppointmentService(repository, notificationService);</span>
+<span class="fc" id="L62">        notificationService = new NotificationService(emailService);</span>
+<span class="fc" id="L63">        repository = new InMemoryRepository();</span>
+<span class="fc" id="L64">        authService = new AuthService(repository);</span>
+<span class="fc" id="L65">        appointmentService = new AppointmentService(repository, notificationService);</span>
 
-<span class="fc" id="L68">        appointmentService.addBookingRule(new DurationRuleStrategy(120));</span>
-<span class="fc" id="L69">        appointmentService.addBookingRule(new ParticipantLimitStrategy());</span>
-<span class="fc" id="L70">        appointmentService.addBookingRule(new TypeSpecificRuleStrategy());</span>
-<span class="fc" id="L71">    }</span>
+<span class="fc" id="L67">        appointmentService.addBookingRule(new DurationRuleStrategy(120));</span>
+<span class="fc" id="L68">        appointmentService.addBookingRule(new ParticipantLimitStrategy());</span>
+<span class="fc" id="L69">        appointmentService.addBookingRule(new TypeSpecificRuleStrategy());</span>
+<span class="fc" id="L70">    }</span>
 
     /**
      * Runs the main application loop and displays the main menu.
      */
 
     private static void runApplication() {
-<span class="fc" id="L78">        System.out.println(&quot;=== Appointment Scheduling System ===\n&quot;);</span>
+<span class="fc" id="L77">        System.out.println(&quot;=== Appointment Scheduling System ===\n&quot;);</span>
 
         while (true) {
-<span class="fc" id="L81">            System.out.println(&quot;1. Login as Administrator&quot;);</span>
-<span class="fc" id="L82">            System.out.println(&quot;2. Login as User&quot;);</span>
-<span class="fc" id="L83">            System.out.println(&quot;3. Exit&quot;);</span>
-<span class="fc" id="L84">            System.out.print(&quot;Choose option: &quot;);</span>
+<span class="fc" id="L80">            System.out.println(&quot;1. Login as Administrator&quot;);</span>
+<span class="fc" id="L81">            System.out.println(&quot;2. Login as User&quot;);</span>
+<span class="fc" id="L82">            System.out.println(&quot;3. Exit&quot;);</span>
+<span class="fc" id="L83">            System.out.print(&quot;Choose option: &quot;);</span>
 
-<span class="fc" id="L86">            int choice = scanner.nextInt();</span>
-<span class="fc" id="L87">            scanner.nextLine();</span>
+<span class="fc" id="L85">            int choice = scanner.nextInt();</span>
+<span class="fc" id="L86">            scanner.nextLine();</span>
 
-<span class="fc bfc" id="L89" title="All 4 branches covered.">            switch (choice) {</span>
+<span class="fc bfc" id="L88" title="All 4 branches covered.">            switch (choice) {</span>
                 case 1:
-<span class="fc" id="L91">                    adminLogin();</span>
-<span class="fc" id="L92">                    break;</span>
+<span class="fc" id="L90">                    adminLogin();</span>
+<span class="fc" id="L91">                    break;</span>
                 case 2:
-<span class="fc" id="L94">                    userLogin();</span>
-<span class="fc" id="L95">                    break;</span>
+<span class="fc" id="L93">                    userLogin();</span>
+<span class="fc" id="L94">                    break;</span>
                 case 3:
-<span class="fc" id="L97">                    System.out.println(&quot;Goodbye!&quot;);</span>
-<span class="fc" id="L98">                    return;</span>
+<span class="fc" id="L96">                    System.out.println(&quot;Goodbye!&quot;);</span>
+<span class="fc" id="L97">                    return;</span>
                 default:
-<span class="fc" id="L100">                    System.out.println(&quot;Invalid option!&quot;);</span>
+<span class="fc" id="L99">                    System.out.println(&quot;Invalid option!&quot;);</span>
             }
-<span class="fc" id="L102">        }</span>
+<span class="fc" id="L101">        }</span>
     }
     /**
      * Handles administrator login.
      */
     private static void adminLogin() {
-<span class="fc" id="L108">        System.out.print(&quot;Enter admin ID: &quot;);</span>
-<span class="fc" id="L109">        String id = scanner.nextLine();</span>
-<span class="fc" id="L110">        System.out.print(&quot;Enter password: &quot;);</span>
-<span class="fc" id="L111">        String password = scanner.nextLine();</span>
+<span class="fc" id="L107">        System.out.print(&quot;Enter admin ID: &quot;);</span>
+<span class="fc" id="L108">        String id = scanner.nextLine();</span>
+<span class="fc" id="L109">        System.out.print(&quot;Enter password: &quot;);</span>
+<span class="fc" id="L110">        String password = scanner.nextLine();</span>
 
-<span class="fc bfc" id="L113" title="All 2 branches covered.">        if (authService.authenticateAdmin(id, password)) {</span>
-<span class="fc" id="L114">            System.out.println(&quot;Login successful!\n&quot;);</span>
-<span class="fc" id="L115">            adminMenu();</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">        if (authService.authenticateAdmin(id, password)) {</span>
+<span class="fc" id="L113">            System.out.println(&quot;Login successful!\n&quot;);</span>
+<span class="fc" id="L114">            adminMenu();</span>
         } else {
-<span class="fc" id="L117">            System.out.println(&quot;Invalid credentials!\n&quot;);</span>
+<span class="fc" id="L116">            System.out.println(&quot;Invalid credentials!\n&quot;);</span>
         }
-<span class="fc" id="L119">    }</span>
+<span class="fc" id="L118">    }</span>
 
     /**
      * Handles user login.
      */
     private static void userLogin() {
-<span class="fc" id="L125">        System.out.print(&quot;Enter username: &quot;);</span>
-<span class="fc" id="L126">        String username = scanner.nextLine();</span>
-<span class="fc" id="L127">        System.out.print(&quot;Enter password: &quot;);</span>
-<span class="fc" id="L128">        String password = scanner.nextLine();</span>
+<span class="fc" id="L124">        System.out.print(&quot;Enter username: &quot;);</span>
+<span class="fc" id="L125">        String username = scanner.nextLine();</span>
+<span class="fc" id="L126">        System.out.print(&quot;Enter password: &quot;);</span>
+<span class="fc" id="L127">        String password = scanner.nextLine();</span>
 
-<span class="fc" id="L130">        User user = authService.authenticateUser(username, password);</span>
-<span class="fc bfc" id="L131" title="All 2 branches covered.">        if (user != null) {</span>
-<span class="fc" id="L132">            System.out.println(&quot;Login successful!\n&quot;);</span>
-<span class="fc" id="L133">            userMenu(user);</span>
+<span class="fc" id="L129">        User user = authService.authenticateUser(username, password);</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">        if (user != null) {</span>
+<span class="fc" id="L131">            System.out.println(&quot;Login successful!\n&quot;);</span>
+<span class="fc" id="L132">            userMenu(user);</span>
         } else {
-<span class="fc" id="L135">            System.out.println(&quot;Invalid credentials!\n&quot;);</span>
+<span class="fc" id="L134">            System.out.println(&quot;Invalid credentials!\n&quot;);</span>
         }
-<span class="fc" id="L137">    }</span>
+<span class="fc" id="L136">    }</span>
     /**
      * Displays the administrator menu and handles admin operations.
      */
     private static void adminMenu() {
         while (true) {
-<span class="fc" id="L143">            System.out.println(&quot;\n=== Administrator Menu ===&quot;);</span>
-<span class="fc" id="L144">            System.out.println(&quot;1. View all appointments&quot;);</span>
-<span class="fc" id="L145">            System.out.println(&quot;2. View available slots&quot;);</span>
-<span class="fc" id="L146">            System.out.println(&quot;3. Add available slot&quot;);</span>
-<span class="fc" id="L147">            System.out.println(&quot;4. Modify appointment&quot;);</span>
-<span class="fc" id="L148">            System.out.println(&quot;5. Cancel appointment&quot;);</span>
-<span class="fc" id="L149">            System.out.println(&quot;6. Logout&quot;);</span>
-<span class="fc" id="L150">            System.out.print(&quot;Choose option: &quot;);</span>
+<span class="fc" id="L142">            System.out.println(&quot;\n=== Administrator Menu ===&quot;);</span>
+<span class="fc" id="L143">            System.out.println(&quot;1. View all appointments&quot;);</span>
+<span class="fc" id="L144">            System.out.println(&quot;2. View available slots&quot;);</span>
+<span class="fc" id="L145">            System.out.println(&quot;3. Add available slot&quot;);</span>
+<span class="fc" id="L146">            System.out.println(&quot;4. Modify appointment&quot;);</span>
+<span class="fc" id="L147">            System.out.println(&quot;5. Cancel appointment&quot;);</span>
+<span class="fc" id="L148">            System.out.println(&quot;6. Logout&quot;);</span>
+<span class="fc" id="L149">            System.out.print(&quot;Choose option: &quot;);</span>
 
-<span class="fc" id="L152">            int choice = scanner.nextInt();</span>
-<span class="fc" id="L153">            scanner.nextLine();</span>
+<span class="fc" id="L151">            int choice = scanner.nextInt();</span>
+<span class="fc" id="L152">            scanner.nextLine();</span>
 
-<span class="pc bpc" id="L155" title="1 of 7 branches missed.">            switch (choice) {</span>
+<span class="pc bpc" id="L154" title="1 of 7 branches missed.">            switch (choice) {</span>
                 case 1:
-<span class="fc" id="L157">                    viewAllAppointments();</span>
-<span class="fc" id="L158">                    break;</span>
+<span class="fc" id="L156">                    viewAllAppointments();</span>
+<span class="fc" id="L157">                    break;</span>
                 case 2:
-<span class="fc" id="L160">                    viewAvailableSlots();</span>
-<span class="fc" id="L161">                    break;</span>
+<span class="fc" id="L159">                    viewAvailableSlots();</span>
+<span class="fc" id="L160">                    break;</span>
                 case 3:
-<span class="nc" id="L163">                    addAvailableSlot();</span>
-<span class="nc" id="L164">                    break;</span>
+<span class="nc" id="L162">                    addAvailableSlot();</span>
+<span class="nc" id="L163">                    break;</span>
                 case 4:
-<span class="fc" id="L166">                    modifyAppointment();</span>
-<span class="fc" id="L167">                    break;</span>
+<span class="fc" id="L165">                    modifyAppointment();</span>
+<span class="fc" id="L166">                    break;</span>
                 case 5:
-<span class="fc" id="L169">                    cancelAppointment();</span>
-<span class="fc" id="L170">                    break;</span>
+<span class="fc" id="L168">                    cancelAppointment();</span>
+<span class="fc" id="L169">                    break;</span>
                 case 6:
-<span class="fc" id="L172">                    authService.logout();</span>
-<span class="fc" id="L173">                    System.out.println(&quot;Logged out\n&quot;);</span>
-<span class="fc" id="L174">                    return;</span>
+<span class="fc" id="L171">                    authService.logout();</span>
+<span class="fc" id="L172">                    System.out.println(&quot;Logged out\n&quot;);</span>
+<span class="fc" id="L173">                    return;</span>
                 default:
-<span class="fc" id="L176">                    System.out.println(&quot;Invalid option!&quot;);</span>
+<span class="fc" id="L175">                    System.out.println(&quot;Invalid option!&quot;);</span>
             }
-<span class="fc" id="L178">        }</span>
+<span class="fc" id="L177">        }</span>
     }
     /**
      * Displays the user menu and handles user operations.
@@ -184,42 +183,42 @@ public class Main {
      */
     private static void userMenu(User user) {
         while (true) {
-<span class="fc" id="L187">            System.out.println(&quot;\n=== User Menu ===&quot;);</span>
-<span class="fc" id="L188">            System.out.println(&quot;1. View available slots&quot;);</span>
-<span class="fc" id="L189">            System.out.println(&quot;2. Book appointment&quot;);</span>
-<span class="fc" id="L190">            System.out.println(&quot;3. View my appointments&quot;);</span>
-<span class="fc" id="L191">            System.out.println(&quot;4. Modify my appointment&quot;);</span>
-<span class="fc" id="L192">            System.out.println(&quot;5. Cancel my appointment&quot;);</span>
-<span class="fc" id="L193">            System.out.println(&quot;6. Logout&quot;);</span>
-<span class="fc" id="L194">            System.out.print(&quot;Choose option: &quot;);</span>
+<span class="fc" id="L186">            System.out.println(&quot;\n=== User Menu ===&quot;);</span>
+<span class="fc" id="L187">            System.out.println(&quot;1. View available slots&quot;);</span>
+<span class="fc" id="L188">            System.out.println(&quot;2. Book appointment&quot;);</span>
+<span class="fc" id="L189">            System.out.println(&quot;3. View my appointments&quot;);</span>
+<span class="fc" id="L190">            System.out.println(&quot;4. Modify my appointment&quot;);</span>
+<span class="fc" id="L191">            System.out.println(&quot;5. Cancel my appointment&quot;);</span>
+<span class="fc" id="L192">            System.out.println(&quot;6. Logout&quot;);</span>
+<span class="fc" id="L193">            System.out.print(&quot;Choose option: &quot;);</span>
 
-<span class="fc" id="L196">            int choice = scanner.nextInt();</span>
-<span class="fc" id="L197">            scanner.nextLine();</span>
+<span class="fc" id="L195">            int choice = scanner.nextInt();</span>
+<span class="fc" id="L196">            scanner.nextLine();</span>
 
-<span class="pc bpc" id="L199" title="1 of 7 branches missed.">            switch (choice) {</span>
+<span class="pc bpc" id="L198" title="1 of 7 branches missed.">            switch (choice) {</span>
                 case 1:
-<span class="fc" id="L201">                    viewAvailableSlots();</span>
-<span class="fc" id="L202">                    break;</span>
+<span class="fc" id="L200">                    viewAvailableSlots();</span>
+<span class="fc" id="L201">                    break;</span>
                 case 2:
-<span class="nc" id="L204">                    bookAppointment(user);</span>
-<span class="nc" id="L205">                    break;</span>
+<span class="nc" id="L203">                    bookAppointment(user);</span>
+<span class="nc" id="L204">                    break;</span>
                 case 3:
-<span class="fc" id="L207">                    viewUserAppointments(user);</span>
-<span class="fc" id="L208">                    break;</span>
+<span class="fc" id="L206">                    viewUserAppointments(user);</span>
+<span class="fc" id="L207">                    break;</span>
                 case 4:
-<span class="fc" id="L210">                    modifyUserAppointment(user);</span>
-<span class="fc" id="L211">                    break;</span>
+<span class="fc" id="L209">                    modifyUserAppointment(user);</span>
+<span class="fc" id="L210">                    break;</span>
                 case 5:
-<span class="fc" id="L213">                    cancelUserAppointment(user);</span>
-<span class="fc" id="L214">                    break;</span>
+<span class="fc" id="L212">                    cancelUserAppointment(user);</span>
+<span class="fc" id="L213">                    break;</span>
                 case 6:
-<span class="fc" id="L216">                    authService.logout();</span>
-<span class="fc" id="L217">                    System.out.println(&quot;Logged out\n&quot;);</span>
-<span class="fc" id="L218">                    return;</span>
+<span class="fc" id="L215">                    authService.logout();</span>
+<span class="fc" id="L216">                    System.out.println(&quot;Logged out\n&quot;);</span>
+<span class="fc" id="L217">                    return;</span>
                 default:
-<span class="fc" id="L220">                    System.out.println(&quot;Invalid option!&quot;);</span>
+<span class="fc" id="L219">                    System.out.println(&quot;Invalid option!&quot;);</span>
             }
-<span class="fc" id="L222">        }</span>
+<span class="fc" id="L221">        }</span>
     }
 
     /**
@@ -227,18 +226,18 @@ public class Main {
      */
     
     private static void viewAvailableSlots() {
-<span class="fc" id="L230">        List&lt;TimeSlot&gt; slots = appointmentService.getAvailableSlots();</span>
-<span class="pc bpc" id="L231" title="1 of 2 branches missed.">        if (slots.isEmpty()) {</span>
-<span class="nc" id="L232">            System.out.println(&quot;No available slots.&quot;);</span>
+<span class="fc" id="L229">        List&lt;TimeSlot&gt; slots = appointmentService.getAvailableSlots();</span>
+<span class="pc bpc" id="L230" title="1 of 2 branches missed.">        if (slots.isEmpty()) {</span>
+<span class="nc" id="L231">            System.out.println(&quot;No available slots.&quot;);</span>
         } else {
-<span class="fc" id="L234">            System.out.println(&quot;\nAvailable appointments:&quot;);</span>
-<span class="fc" id="L235">            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd HH:mm&quot;);</span>
-<span class="fc bfc" id="L236" title="All 2 branches covered.">            for (int i = 0; i &lt; slots.size(); i++) {</span>
-<span class="fc" id="L237">                String formatted = slots.get(i).getStart().format(formatter);</span>
-<span class="fc" id="L238">                System.out.println((i + 1) + &quot;. &quot; + formatted);</span>
+<span class="fc" id="L233">            System.out.println(&quot;\nAvailable appointments:&quot;);</span>
+<span class="fc" id="L234">            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd HH:mm&quot;);</span>
+<span class="fc bfc" id="L235" title="All 2 branches covered.">            for (int i = 0; i &lt; slots.size(); i++) {</span>
+<span class="fc" id="L236">                String formatted = slots.get(i).getStart().format(formatter);</span>
+<span class="fc" id="L237">                System.out.println((i + 1) + &quot;. &quot; + formatted);</span>
             }
         }
-<span class="fc" id="L241">    }</span>
+<span class="fc" id="L240">    }</span>
 
 
     /**
@@ -247,60 +246,60 @@ public class Main {
      * @param user the user booking the appointment
      */
     private static void bookAppointment(User user) {
-<span class="fc" id="L250">        List&lt;TimeSlot&gt; slots = appointmentService.getAvailableSlots();</span>
-<span class="pc bpc" id="L251" title="1 of 2 branches missed.">        if (slots.isEmpty()) {</span>
-<span class="nc" id="L252">            System.out.println(&quot;No available slots.&quot;);</span>
-<span class="nc" id="L253">            return;</span>
+<span class="fc" id="L249">        List&lt;TimeSlot&gt; slots = appointmentService.getAvailableSlots();</span>
+<span class="pc bpc" id="L250" title="1 of 2 branches missed.">        if (slots.isEmpty()) {</span>
+<span class="nc" id="L251">            System.out.println(&quot;No available slots.&quot;);</span>
+<span class="nc" id="L252">            return;</span>
         }
 
-<span class="fc" id="L256">        viewAvailableSlots();</span>
-<span class="fc" id="L257">        System.out.print(&quot;Choose slot number (or 0 to cancel): &quot;);</span>
-<span class="fc" id="L258">        int slotIndex = scanner.nextInt() - 1;</span>
-<span class="fc" id="L259">        scanner.nextLine();</span>
+<span class="fc" id="L255">        viewAvailableSlots();</span>
+<span class="fc" id="L256">        System.out.print(&quot;Choose slot number (or 0 to cancel): &quot;);</span>
+<span class="fc" id="L257">        int slotIndex = scanner.nextInt() - 1;</span>
+<span class="fc" id="L258">        scanner.nextLine();</span>
 
-<span class="fc bfc" id="L261" title="All 2 branches covered.">        if (slotIndex == -1) {</span>
-<span class="fc" id="L262">            System.out.println(&quot;Booking cancelled.&quot;);</span>
-<span class="fc" id="L263">            return;</span>
+<span class="fc bfc" id="L260" title="All 2 branches covered.">        if (slotIndex == -1) {</span>
+<span class="fc" id="L261">            System.out.println(&quot;Booking cancelled.&quot;);</span>
+<span class="fc" id="L262">            return;</span>
         }
 
-<span class="pc bpc" id="L266" title="2 of 4 branches missed.">        if (slotIndex &gt;= 0 &amp;&amp; slotIndex &lt; slots.size()) {</span>
-<span class="fc" id="L267">            System.out.println(&quot;Select appointment type (or 0 to cancel):&quot;);</span>
-<span class="fc" id="L268">            System.out.println(&quot;1. Individual&quot;);</span>
-<span class="fc" id="L269">            System.out.println(&quot;2. Group&quot;);</span>
-<span class="fc" id="L270">            System.out.println(&quot;3. Virtual&quot;);</span>
-<span class="fc" id="L271">            System.out.println(&quot;4. In-person&quot;);</span>
-<span class="fc" id="L272">            System.out.print(&quot;Choose type: &quot;);</span>
-<span class="fc" id="L273">            int typeChoice = scanner.nextInt();</span>
-<span class="fc" id="L274">            scanner.nextLine();</span>
+<span class="pc bpc" id="L265" title="2 of 4 branches missed.">        if (slotIndex &gt;= 0 &amp;&amp; slotIndex &lt; slots.size()) {</span>
+<span class="fc" id="L266">            System.out.println(&quot;Select appointment type (or 0 to cancel):&quot;);</span>
+<span class="fc" id="L267">            System.out.println(&quot;1. Individual&quot;);</span>
+<span class="fc" id="L268">            System.out.println(&quot;2. Group&quot;);</span>
+<span class="fc" id="L269">            System.out.println(&quot;3. Virtual&quot;);</span>
+<span class="fc" id="L270">            System.out.println(&quot;4. In-person&quot;);</span>
+<span class="fc" id="L271">            System.out.print(&quot;Choose type: &quot;);</span>
+<span class="fc" id="L272">            int typeChoice = scanner.nextInt();</span>
+<span class="fc" id="L273">            scanner.nextLine();</span>
 
-<span class="pc bpc" id="L276" title="1 of 2 branches missed.">            if (typeChoice == 0) {</span>
-<span class="nc" id="L277">                System.out.println(&quot;Booking cancelled.&quot;);</span>
-<span class="nc" id="L278">                return;</span>
+<span class="pc bpc" id="L275" title="1 of 2 branches missed.">            if (typeChoice == 0) {</span>
+<span class="nc" id="L276">                System.out.println(&quot;Booking cancelled.&quot;);</span>
+<span class="nc" id="L277">                return;</span>
             }
 
             AppointmentType type;
-<span class="pc bpc" id="L282" title="4 of 5 branches missed.">            switch (typeChoice) {</span>
-<span class="fc" id="L283">                case 1: type = AppointmentType.INDIVIDUAL; break;</span>
-<span class="nc" id="L284">                case 2: type = AppointmentType.GROUP; break;</span>
-<span class="nc" id="L285">                case 3: type = AppointmentType.VIRTUAL; break;</span>
-<span class="nc" id="L286">                case 4: type = AppointmentType.IN_PERSON; break;</span>
-<span class="nc" id="L287">                default: type = AppointmentType.INDIVIDUAL;</span>
+<span class="pc bpc" id="L281" title="4 of 5 branches missed.">            switch (typeChoice) {</span>
+<span class="fc" id="L282">                case 1: type = AppointmentType.INDIVIDUAL; break;</span>
+<span class="nc" id="L283">                case 2: type = AppointmentType.GROUP; break;</span>
+<span class="nc" id="L284">                case 3: type = AppointmentType.VIRTUAL; break;</span>
+<span class="nc" id="L285">                case 4: type = AppointmentType.IN_PERSON; break;</span>
+<span class="nc" id="L286">                default: type = AppointmentType.INDIVIDUAL;</span>
             }
 
-<span class="fc" id="L290">            TimeSlot selectedSlot = slots.get(slotIndex);</span>
-<span class="fc" id="L291">            String id = UUID.randomUUID().toString();</span>
-<span class="fc" id="L292">            Appointment appointment = new Appointment(id, user, selectedSlot, type, &quot;Confirmed&quot;);</span>
+<span class="fc" id="L289">            TimeSlot selectedSlot = slots.get(slotIndex);</span>
+<span class="fc" id="L290">            String id = UUID.randomUUID().toString();</span>
+<span class="fc" id="L291">            Appointment appointment = new Appointment(id, user, selectedSlot, type, &quot;Confirmed&quot;);</span>
 
             try {
-<span class="fc" id="L295">                appointmentService.bookAppointment(appointment);</span>
-<span class="fc" id="L296">                System.out.println(&quot; Appointment booked successfully!&quot;);</span>
-<span class="nc" id="L297">            } catch (IllegalArgumentException e) {</span>
-<span class="nc" id="L298">                System.out.println(&quot;❌ &quot; + e.getMessage());</span>
-<span class="fc" id="L299">            }</span>
-<span class="fc" id="L300">        } else {</span>
-<span class="nc" id="L301">            System.out.println(&quot;Invalid slot number.&quot;);</span>
+<span class="fc" id="L294">                appointmentService.bookAppointment(appointment);</span>
+<span class="fc" id="L295">                System.out.println(&quot; Appointment booked successfully!&quot;);</span>
+<span class="nc" id="L296">            } catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L297">                System.out.println(&quot;❌ &quot; + e.getMessage());</span>
+<span class="fc" id="L298">            }</span>
+<span class="fc" id="L299">        } else {</span>
+<span class="nc" id="L300">            System.out.println(&quot;Invalid slot number.&quot;);</span>
         }
-<span class="fc" id="L303">    }</span>
+<span class="fc" id="L302">    }</span>
 
     /**
      * Displays appointments of a specific user.
@@ -309,169 +308,172 @@ public class Main {
      */
     
     private static void viewUserAppointments(User user) {
-<span class="fc" id="L312">        List&lt;Appointment&gt; appointments = appointmentService.getUserAppointments(user);</span>
-<span class="pc bpc" id="L313" title="1 of 2 branches missed.">        if (appointments.isEmpty()) {</span>
-<span class="fc" id="L314">            System.out.println(&quot;You have no appointments.&quot;);</span>
+<span class="fc" id="L311">        List&lt;Appointment&gt; appointments = appointmentService.getUserAppointments(user);</span>
+<span class="pc bpc" id="L312" title="1 of 2 branches missed.">        if (appointments.isEmpty()) {</span>
+<span class="fc" id="L313">            System.out.println(&quot;You have no appointments.&quot;);</span>
         } else {
-<span class="nc" id="L316">            System.out.println(&quot;\nYour appointments:&quot;);</span>
-<span class="nc bnc" id="L317" title="All 2 branches missed.">            for (Appointment apt : appointments) {</span>
-<span class="nc" id="L318">                System.out.println(apt);</span>
-<span class="nc" id="L319">            }</span>
+<span class="nc" id="L315">            System.out.println(&quot;\nYour appointments:&quot;);</span>
+<span class="nc bnc" id="L316" title="All 2 branches missed.">            for (Appointment apt : appointments) {</span>
+<span class="nc" id="L317">                System.out.println(apt);</span>
+<span class="nc" id="L318">            }</span>
         }
-<span class="fc" id="L321">    }</span>
+<span class="fc" id="L320">    }</span>
 
     /**
      * Displays all appointments in the system.
      */
     private static void viewAllAppointments() {
-<span class="fc" id="L327">        List&lt;Appointment&gt; appointments = appointmentService.getAllAppointments();</span>
-<span class="fc bfc" id="L328" title="All 2 branches covered.">        if (appointments.isEmpty()) {</span>
-<span class="fc" id="L329">            System.out.println(&quot;No appointments found.&quot;);</span>
+<span class="fc" id="L326">        List&lt;Appointment&gt; appointments = appointmentService.getAllAppointments();</span>
+<span class="fc bfc" id="L327" title="All 2 branches covered.">        if (appointments.isEmpty()) {</span>
+<span class="fc" id="L328">            System.out.println(&quot;No appointments found.&quot;);</span>
         } else {
-<span class="fc" id="L331">            System.out.println(&quot;\nAll Appointments:&quot;);</span>
-<span class="fc bfc" id="L332" title="All 2 branches covered.">            for (Appointment apt : appointments) {</span>
-<span class="fc" id="L333">                System.out.println(apt);</span>
-<span class="fc" id="L334">            }</span>
+<span class="fc" id="L330">            System.out.println(&quot;\nAll Appointments:&quot;);</span>
+<span class="fc bfc" id="L331" title="All 2 branches covered.">            for (Appointment apt : appointments) {</span>
+<span class="fc" id="L332">                System.out.println(apt);</span>
+<span class="fc" id="L333">            }</span>
         }
-<span class="fc" id="L336">    }</span>
+<span class="fc" id="L335">    }</span>
 
     private static void addAvailableSlot() {
-<span class="fc" id="L339">        System.out.println(&quot;Enter new slot details (format: yyyy-MM-dd HH:mm): &quot;);</span>
-<span class="fc" id="L340">        scanner.nextLine(); </span>
-<span class="fc" id="L341">        String dateTimeStr = scanner.nextLine();</span>
+<span class="fc" id="L338">        System.out.println(&quot;Enter new slot details (format: yyyy-MM-dd HH:mm): &quot;);</span>
+<span class="fc" id="L339">        scanner.nextLine(); </span>
+<span class="fc" id="L340">        String dateTimeStr = scanner.nextLine();</span>
         try {
-<span class="fc" id="L343">            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd HH:mm&quot;);</span>
-<span class="fc" id="L344">            LocalDateTime start = LocalDateTime.parse(dateTimeStr, formatter);</span>
-<span class="fc" id="L345">            LocalDateTime end = start.plusHours(1);</span>
-<span class="fc" id="L346">            TimeSlot newSlot = new TimeSlot(start, end);</span>
+<span class="fc" id="L342">            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd HH:mm&quot;);</span>
+<span class="fc" id="L343">            LocalDateTime start = LocalDateTime.parse(dateTimeStr, formatter);</span>
+<span class="fc" id="L344">            LocalDateTime end = start.plusHours(1);</span>
+<span class="fc" id="L345">            TimeSlot newSlot = new TimeSlot(start, end);</span>
             
-<span class="pc bpc" id="L348" title="1 of 2 branches missed.">            if (repository.isSlotOverlapping(newSlot)) {</span>
-<span class="nc" id="L349">                System.out.println(&quot; This time slot overlaps with an existing available slot. Please choose another time.&quot;);</span>
-<span class="nc" id="L350">                return;</span>
+<span class="pc bpc" id="L347" title="1 of 2 branches missed.">            if (repository.isSlotOverlapping(newSlot)) {</span>
+<span class="nc" id="L348">                System.out.println(&quot; This time slot overlaps with an existing available slot. Please choose another time.&quot;);</span>
+<span class="nc" id="L349">                return;</span>
             }
             
-<span class="fc" id="L353">            appointmentService.addAvailableSlot(newSlot);</span>
-<span class="fc" id="L354">            System.out.println(&quot; Slot added successfully!&quot;);</span>
-<span class="fc" id="L355">        } catch (Exception e) {</span>
-<span class="fc" id="L356">            System.out.println(&quot; Invalid format. Please use yyyy-MM-dd HH:mm (e.g., 2026-04-12 10:00)&quot;);</span>
-<span class="fc" id="L357">        }</span>
-<span class="fc" id="L358">    }</span>
+<span class="fc" id="L352">            appointmentService.addAvailableSlot(newSlot);</span>
+<span class="fc" id="L353">            System.out.println(&quot; Slot added successfully!&quot;);</span>
+<span class="fc" id="L354">        } catch (Exception e) {</span>
+<span class="fc" id="L355">            System.out.println(&quot; Invalid format. Please use yyyy-MM-dd HH:mm (e.g., 2026-04-12 10:00)&quot;);</span>
+<span class="fc" id="L356">        }</span>
+<span class="fc" id="L357">    }</span>
 
     private static void modifyAppointment() {
-<span class="fc" id="L361">        List&lt;Appointment&gt; appointments = appointmentService.getAllAppointments();</span>
-<span class="fc bfc" id="L362" title="All 2 branches covered.">        if (appointments.isEmpty()) {</span>
-<span class="fc" id="L363">            System.out.println(&quot;No appointments to modify.&quot;);</span>
-<span class="fc" id="L364">            return;</span>
+<span class="fc" id="L360">        List&lt;Appointment&gt; appointments = appointmentService.getAllAppointments();</span>
+<span class="fc bfc" id="L361" title="All 2 branches covered.">        if (appointments.isEmpty()) {</span>
+<span class="fc" id="L362">            System.out.println(&quot;No appointments to modify.&quot;);</span>
+<span class="fc" id="L363">            return;</span>
         }
 
-<span class="fc" id="L367">        viewAllAppointments();</span>
-<span class="fc" id="L368">        System.out.print(&quot;Enter appointment ID to modify: &quot;);</span>
-<span class="fc" id="L369">        String id = scanner.nextLine();</span>
+<span class="fc" id="L366">        viewAllAppointments();</span>
+<span class="fc" id="L367">        System.out.print(&quot;Enter appointment ID to modify: &quot;);</span>
+<span class="fc" id="L368">        String id = scanner.nextLine();</span>
 
-<span class="fc" id="L371">        Appointment appointment = appointmentService.findAppointment(id);</span>
-<span class="pc bpc" id="L372" title="1 of 2 branches missed.">        if (appointment != null) {</span>
-<span class="fc" id="L373">            List&lt;TimeSlot&gt; slots = appointmentService.getAvailableSlots();</span>
-<span class="pc bpc" id="L374" title="1 of 2 branches missed.">            if (slots.isEmpty()) {</span>
-<span class="nc" id="L375">                System.out.println(&quot;No available slots to change to.&quot;);</span>
-<span class="nc" id="L376">                return;</span>
+<span class="fc" id="L370">        Appointment appointment = appointmentService.findAppointment(id);</span>
+<span class="pc bpc" id="L371" title="1 of 2 branches missed.">        if (appointment != null) {</span>
+<span class="fc" id="L372">            List&lt;TimeSlot&gt; slots = appointmentService.getAvailableSlots();</span>
+<span class="pc bpc" id="L373" title="1 of 2 branches missed.">            if (slots.isEmpty()) {</span>
+<span class="nc" id="L374">                System.out.println(&quot;No available slots to change to.&quot;);</span>
+<span class="nc" id="L375">                return;</span>
             }
-<span class="fc" id="L378">            viewAvailableSlots();</span>
-<span class="fc" id="L379">            System.out.print(&quot;Choose new slot number: &quot;);</span>
-<span class="fc" id="L380">            int slotIndex = scanner.nextInt() - 1;</span>
-<span class="fc" id="L381">            scanner.nextLine();</span>
+<span class="fc" id="L377">            viewAvailableSlots();</span>
+<span class="fc" id="L378">            System.out.print(&quot;Choose new slot number: &quot;);</span>
+<span class="fc" id="L379">            int slotIndex = scanner.nextInt() - 1;</span>
+<span class="fc" id="L380">            scanner.nextLine();</span>
 
-<span class="pc bpc" id="L383" title="2 of 4 branches missed.">            if (slotIndex &gt;= 0 &amp;&amp; slotIndex &lt; slots.size()) {</span>
-<span class="fc" id="L384">                TimeSlot newSlot = slots.get(slotIndex);</span>
+<span class="pc bpc" id="L382" title="2 of 4 branches missed.">            if (slotIndex &gt;= 0 &amp;&amp; slotIndex &lt; slots.size()) {</span>
+<span class="fc" id="L383">                TimeSlot newSlot = slots.get(slotIndex);</span>
                 try {
-<span class="fc" id="L386">                    appointmentService.modifyAppointment(id, newSlot);</span>
-<span class="fc" id="L387">                    System.out.println(&quot; Appointment modified successfully!&quot;);</span>
-<span class="nc" id="L388">                } catch (IllegalArgumentException e) {</span>
-<span class="nc" id="L389">                    System.out.println(&quot;❌ &quot; + e.getMessage());</span>
-<span class="fc" id="L390">                }</span>
+<span class="fc" id="L385">                    appointmentService.modifyAppointment(id, newSlot);</span>
+<span class="fc" id="L386">                    System.out.println(&quot; Appointment modified successfully!&quot;);</span>
+<span class="nc" id="L387">                } catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L388">                    System.out.println(&quot;❌ &quot; + e.getMessage());</span>
+<span class="fc" id="L389">                }</span>
             }
-<span class="fc" id="L392">        } else {</span>
-<span class="nc" id="L393">            System.out.println(&quot;Appointment not found.&quot;);</span>
+<span class="fc" id="L391">        } else {</span>
+<span class="nc" id="L392">            System.out.println(&quot;Appointment not found.&quot;);</span>
         }
-<span class="fc" id="L395">    }</span>
+<span class="fc" id="L394">    }</span>
 
     private static void modifyUserAppointment(User user) {
-<span class="fc" id="L398">        List&lt;Appointment&gt; appointments = appointmentService.getUserAppointments(user);</span>
-<span class="pc bpc" id="L399" title="1 of 2 branches missed.">        if (appointments.isEmpty()) {</span>
-<span class="fc" id="L400">            System.out.println(&quot;You have no appointments to modify.&quot;);</span>
-<span class="fc" id="L401">            return;</span>
+<span class="fc" id="L397">        List&lt;Appointment&gt; appointments = appointmentService.getUserAppointments(user);</span>
+<span class="pc bpc" id="L398" title="1 of 2 branches missed.">        if (appointments.isEmpty()) {</span>
+<span class="fc" id="L399">            System.out.println(&quot;You have no appointments to modify.&quot;);</span>
+<span class="fc" id="L400">            return;</span>
         }
 
-<span class="nc" id="L404">        viewUserAppointments(user);</span>
-<span class="nc" id="L405">        System.out.print(&quot;Enter appointment ID to modify: &quot;);</span>
-<span class="nc" id="L406">        String id = scanner.nextLine();</span>
+<span class="nc" id="L403">        viewUserAppointments(user);</span>
+<span class="nc" id="L404">        System.out.print(&quot;Enter appointment ID to modify: &quot;);</span>
+<span class="nc" id="L405">        String id = scanner.nextLine();</span>
 
-<span class="nc" id="L408">        Appointment appointment = appointmentService.findAppointment(id);</span>
-<span class="nc bnc" id="L409" title="All 2 branches missed.">        if (appointment != null) {</span>
-<span class="nc" id="L410">            List&lt;TimeSlot&gt; slots = appointmentService.getAvailableSlots();</span>
-<span class="nc bnc" id="L411" title="All 2 branches missed.">            if (slots.isEmpty()) {</span>
-<span class="nc" id="L412">                System.out.println(&quot;No available slots to change to.&quot;);</span>
-<span class="nc" id="L413">                return;</span>
+<span class="nc" id="L407">        Appointment appointment = appointmentService.findAppointment(id);</span>
+<span class="nc bnc" id="L408" title="All 2 branches missed.">        if (appointment != null) {</span>
+<span class="nc" id="L409">            List&lt;TimeSlot&gt; slots = appointmentService.getAvailableSlots();</span>
+<span class="nc bnc" id="L410" title="All 2 branches missed.">            if (slots.isEmpty()) {</span>
+<span class="nc" id="L411">                System.out.println(&quot;No available slots to change to.&quot;);</span>
+<span class="nc" id="L412">                return;</span>
             }
-<span class="nc" id="L415">            viewAvailableSlots();</span>
-<span class="nc" id="L416">            System.out.print(&quot;Choose new slot number: &quot;);</span>
-<span class="nc" id="L417">            int slotIndex = scanner.nextInt() - 1;</span>
-<span class="nc" id="L418">            scanner.nextLine();</span>
+<span class="nc" id="L414">            viewAvailableSlots();</span>
+<span class="nc" id="L415">            System.out.print(&quot;Choose new slot number: &quot;);</span>
+<span class="nc" id="L416">            int slotIndex = scanner.nextInt() - 1;</span>
+<span class="nc" id="L417">            scanner.nextLine();</span>
 
-<span class="nc bnc" id="L420" title="All 4 branches missed.">            if (slotIndex &gt;= 0 &amp;&amp; slotIndex &lt; slots.size()) {</span>
-<span class="nc" id="L421">                TimeSlot newSlot = slots.get(slotIndex);</span>
+<span class="nc bnc" id="L419" title="All 4 branches missed.">            if (slotIndex &gt;= 0 &amp;&amp; slotIndex &lt; slots.size()) {</span>
+<span class="nc" id="L420">                TimeSlot newSlot = slots.get(slotIndex);</span>
                 try {
-<span class="nc" id="L423">                    appointmentService.modifyAppointment(id, newSlot);</span>
-<span class="nc" id="L424">                    System.out.println(&quot; Appointment modified successfully!&quot;);</span>
-<span class="nc" id="L425">                } catch (IllegalArgumentException e) {</span>
-<span class="nc" id="L426">                    System.out.println(&quot;❌ &quot; + e.getMessage());</span>
-<span class="nc" id="L427">                }</span>
+<span class="nc" id="L422">                    appointmentService.modifyAppointment(id, newSlot);</span>
+<span class="nc" id="L423">                    System.out.println(&quot; Appointment modified successfully!&quot;);</span>
+<span class="nc" id="L424">                } catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L425">                    System.out.println(&quot;❌ &quot; + e.getMessage());</span>
+<span class="nc" id="L426">                }</span>
             }
-<span class="nc" id="L429">        } else {</span>
-<span class="nc" id="L430">            System.out.println(&quot;Appointment not found.&quot;);</span>
+<span class="nc" id="L428">        } else {</span>
+<span class="nc" id="L429">            System.out.println(&quot;Appointment not found.&quot;);</span>
         }
-<span class="nc" id="L432">    }</span>
+<span class="nc" id="L431">    }</span>
 
     private static void cancelAppointment() {
-<span class="fc" id="L435">        List&lt;Appointment&gt; appointments = appointmentService.getAllAppointments();</span>
-<span class="fc bfc" id="L436" title="All 2 branches covered.">        if (appointments.isEmpty()) {</span>
-<span class="fc" id="L437">            System.out.println(&quot;No appointments to cancel.&quot;);</span>
-<span class="fc" id="L438">            return;</span>
+<span class="fc" id="L434">        List&lt;Appointment&gt; appointments = appointmentService.getAllAppointments();</span>
+<span class="fc bfc" id="L435" title="All 2 branches covered.">        if (appointments.isEmpty()) {</span>
+<span class="fc" id="L436">            System.out.println(&quot;No appointments to cancel.&quot;);</span>
+<span class="fc" id="L437">            return;</span>
         }
 
-<span class="fc" id="L441">        viewAllAppointments();</span>
-<span class="fc" id="L442">        System.out.print(&quot;Enter appointment ID to cancel: &quot;);</span>
-<span class="fc" id="L443">        String id = scanner.nextLine();</span>
+<span class="fc" id="L440">        viewAllAppointments();</span>
+<span class="fc" id="L441">        System.out.print(&quot;Enter appointment ID to cancel: &quot;);</span>
+<span class="fc" id="L442">        String id = scanner.nextLine();</span>
 
         try {
-<span class="fc" id="L446">            appointmentService.cancelAppointment(id, null); // admin cancels</span>
-<span class="fc" id="L447">            System.out.println(&quot; Appointment cancelled successfully!&quot;);</span>
-<span class="nc" id="L448">        } catch (IllegalArgumentException e) {</span>
-<span class="nc" id="L449">            System.out.println(&quot;❌ &quot; + e.getMessage());</span>
-<span class="fc" id="L450">        }</span>
-<span class="fc" id="L451">    }</span>
+<span class="fc" id="L445">            appointmentService.cancelAppointment(id, null); // admin cancels</span>
+<span class="fc" id="L446">            System.out.println(&quot; Appointment cancelled successfully!&quot;);</span>
+<span class="nc" id="L447">        } catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L448">            System.out.println(&quot;❌ &quot; + e.getMessage());</span>
+<span class="fc" id="L449">        }</span>
+<span class="fc" id="L450">    }</span>
 
     private static void cancelUserAppointment(User user) {
-<span class="fc" id="L454">        List&lt;Appointment&gt; appointments = appointmentService.getUserAppointments(user);</span>
-<span class="pc bpc" id="L455" title="1 of 2 branches missed.">        if (appointments.isEmpty()) {</span>
-<span class="fc" id="L456">            System.out.println(&quot;You have no appointments to cancel.&quot;);</span>
-<span class="fc" id="L457">            return;</span>
+<span class="fc" id="L453">        List&lt;Appointment&gt; appointments = appointmentService.getUserAppointments(user);</span>
+<span class="pc bpc" id="L454" title="1 of 2 branches missed.">        if (appointments.isEmpty()) {</span>
+<span class="fc" id="L455">            System.out.println(&quot;You have no appointments to cancel.&quot;);</span>
+<span class="fc" id="L456">            return;</span>
         }
 
-<span class="nc" id="L460">        viewUserAppointments(user);</span>
-<span class="nc" id="L461">        System.out.print(&quot;Enter appointment ID to cancel: &quot;);</span>
-<span class="nc" id="L462">        String id = scanner.nextLine();</span>
+<span class="nc" id="L459">        viewUserAppointments(user);</span>
+<span class="nc" id="L460">        System.out.print(&quot;Enter appointment ID to cancel: &quot;);</span>
+<span class="nc" id="L461">        String id = scanner.nextLine();</span>
 
         try {
-<span class="nc" id="L465">            appointmentService.cancelAppointment(id, user);</span>
-<span class="nc" id="L466">            System.out.println(&quot;Appointment cancelled successfully!&quot;);</span>
-<span class="nc" id="L467">        } catch (IllegalArgumentException e) {</span>
-<span class="nc" id="L468">            System.out.println(&quot;❌ &quot; + e.getMessage());</span>
-<span class="nc" id="L469">        }</span>
-<span class="nc" id="L470">    }</span>
+<span class="nc" id="L464">            appointmentService.cancelAppointment(id, user);</span>
+<span class="nc" id="L465">            System.out.println(&quot;Appointment cancelled successfully!&quot;);</span>
+<span class="nc" id="L466">        } catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L467">            System.out.println(&quot;❌ &quot; + e.getMessage());</span>
+<span class="nc" id="L468">        }</span>
+<span class="nc" id="L469">    }</span>
     /**
      * Private constructor to prevent instantiation of utility class.
      */
     private Main() {
+    	
+        // Utility class - prevent instantiation
+
     }
     
 
@@ -479,28 +481,28 @@ public class Main {
  * For testing purposes - allows injecting a custom scanner
  */
 public static void setScanner(Scanner testScanner) {
-<span class="fc" id="L482">    scanner = testScanner;</span>
-<span class="fc" id="L483">}</span>
+<span class="fc" id="L484">    scanner = testScanner;</span>
+<span class="fc" id="L485">}</span>
 
 /**
  * For testing purposes - resets the scanner to System.in
  */
 public static void resetScanner() {
-<span class="fc" id="L489">    scanner = new Scanner(System.in);</span>
-<span class="fc" id="L490">}</span>
+<span class="fc" id="L491">    scanner = new Scanner(System.in);</span>
+<span class="fc" id="L492">}</span>
 
 /**
  * For testing purposes - allows accessing the authService
  */
 public static AuthService getAuthService() {
-<span class="fc" id="L496">    return authService;</span>
+<span class="fc" id="L498">    return authService;</span>
 }
 
 /**
  * For testing purposes - allows accessing the appointmentService
  */
 public static AppointmentService getAppointmentService() {
-<span class="fc" id="L503">    return appointmentService;</span>
+<span class="fc" id="L505">    return appointmentService;</span>
 }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

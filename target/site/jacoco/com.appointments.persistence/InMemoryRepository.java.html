@@ -3,7 +3,6 @@
 import com.appointments.domain.*;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * In-memory implementation of the repository.
@@ -25,44 +24,44 @@ public class InMemoryRepository {
     /**
      * Constructs the repository and initializes sample data.
      */
-<span class="fc" id="L28">    public InMemoryRepository() {</span>
-<span class="fc" id="L29">        this.users = new HashMap&lt;&gt;();</span>
-<span class="fc" id="L30">        this.admins = new HashMap&lt;&gt;();</span>
-<span class="fc" id="L31">        this.appointments = new HashMap&lt;&gt;();</span>
-<span class="fc" id="L32">        this.availableSlots = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L27">    public InMemoryRepository() {</span>
+<span class="fc" id="L28">        this.users = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L29">        this.admins = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L30">        this.appointments = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L31">        this.availableSlots = new ArrayList&lt;&gt;();</span>
 
-<span class="fc" id="L34">        initializeSampleData();</span>
-<span class="fc" id="L35">    }</span>
+<span class="fc" id="L33">        initializeSampleData();</span>
+<span class="fc" id="L34">    }</span>
 
     /**
      * Initializes sample administrators, users, and available time slots.
      */
     private void initializeSampleData() {
         // Admin
-<span class="fc" id="L42">        Administrator admin = new Administrator(&quot;admin&quot;, &quot;1234&quot;, &quot;System Admin&quot;);</span>
-<span class="fc" id="L43">        saveAdministrator(admin);</span>
+<span class="fc" id="L41">        Administrator admin = new Administrator(&quot;admin&quot;, &quot;1234&quot;, &quot;System Admin&quot;);</span>
+<span class="fc" id="L42">        saveAdministrator(admin);</span>
 
         // User
-<span class="fc" id="L46">        User user = new User(&quot;eman&quot;, &quot;1234&quot;, &quot;User One&quot;, &quot;ekh9951@gmail.com&quot;);</span>
-<span class="fc" id="L47">        saveUser(user);  </span>
-<span class="fc" id="L48">        User user1 = new User(&quot;user1&quot;, &quot;password&quot;, &quot;User One&quot;, &quot;user@example.com&quot;);</span>
-<span class="fc" id="L49">        user1.setPhoneNumber(&quot;+1234567890&quot;);</span>
-<span class="fc" id="L50">        saveUser(user1);</span>
+<span class="fc" id="L45">        User user = new User(&quot;eman&quot;, &quot;1234&quot;, &quot;User One&quot;, &quot;ekh9951@gmail.com&quot;);</span>
+<span class="fc" id="L46">        saveUser(user);  </span>
+<span class="fc" id="L47">        User user1 = new User(&quot;user1&quot;, &quot;password&quot;, &quot;User One&quot;, &quot;user@example.com&quot;);</span>
+<span class="fc" id="L48">        user1.setPhoneNumber(&quot;+1234567890&quot;);</span>
+<span class="fc" id="L49">        saveUser(user1);</span>
 
-<span class="fc" id="L52">        LocalDateTime now = LocalDateTime.now();</span>
-<span class="fc" id="L53">        addAvailableTimeSlot(new TimeSlot(now.plusDays(1).withHour(10), now.plusDays(1).withHour(11)));</span>
-<span class="fc" id="L54">        addAvailableTimeSlot(new TimeSlot(now.plusDays(1).withHour(11), now.plusDays(1).withHour(12)));</span>
-<span class="fc" id="L55">        addAvailableTimeSlot(new TimeSlot(now.plusDays(1).withHour(12), now.plusDays(1).withHour(13)));</span>
-<span class="fc" id="L56">    }</span>
+<span class="fc" id="L51">        LocalDateTime now = LocalDateTime.now();</span>
+<span class="fc" id="L52">        addAvailableTimeSlot(new TimeSlot(now.plusDays(1).withHour(10), now.plusDays(1).withHour(11)));</span>
+<span class="fc" id="L53">        addAvailableTimeSlot(new TimeSlot(now.plusDays(1).withHour(11), now.plusDays(1).withHour(12)));</span>
+<span class="fc" id="L54">        addAvailableTimeSlot(new TimeSlot(now.plusDays(1).withHour(12), now.plusDays(1).withHour(13)));</span>
+<span class="fc" id="L55">    }</span>
     /**
      * Clears all data from the repository for testing purposes.
      */
     public void clearAllData() {
-<span class="fc" id="L61">        users.clear();</span>
-<span class="fc" id="L62">        admins.clear();</span>
-<span class="fc" id="L63">        appointments.clear();</span>
-<span class="fc" id="L64">        availableSlots.clear();</span>
-<span class="fc" id="L65">    }</span>
+<span class="fc" id="L60">        users.clear();</span>
+<span class="fc" id="L61">        admins.clear();</span>
+<span class="fc" id="L62">        appointments.clear();</span>
+<span class="fc" id="L63">        availableSlots.clear();</span>
+<span class="fc" id="L64">    }</span>
     // ===================== User operations =====================
 
     /**
@@ -71,8 +70,8 @@ public class InMemoryRepository {
      * @param user the user to save
      */
     public void saveUser(User user) {
-<span class="fc" id="L74">        users.put(user.getUsername(), user);</span>
-<span class="fc" id="L75">    }</span>
+<span class="fc" id="L73">        users.put(user.getUsername(), user);</span>
+<span class="fc" id="L74">    }</span>
 
     /**
      * Finds a user by username.
@@ -81,7 +80,7 @@ public class InMemoryRepository {
      * @return the user if found, otherwise null
      */
     public User findUser(String username) {
-<span class="fc" id="L84">        return users.get(username);</span>
+<span class="fc" id="L83">        return users.get(username);</span>
     }
 
     /**
@@ -90,7 +89,7 @@ public class InMemoryRepository {
      * @return list of users
      */
     public List&lt;User&gt; getAllUsers() {
-<span class="fc" id="L93">        return new ArrayList&lt;&gt;(users.values());</span>
+<span class="fc" id="L92">        return new ArrayList&lt;&gt;(users.values());</span>
     }
 
     // ===================== Admin operations =====================
@@ -101,8 +100,8 @@ public class InMemoryRepository {
      * @param admin the administrator to save
      */
     public void saveAdministrator(Administrator admin) {
-<span class="fc" id="L104">        admins.put(admin.getAdminId(), admin);</span>
-<span class="fc" id="L105">    }</span>
+<span class="fc" id="L103">        admins.put(admin.getAdminId(), admin);</span>
+<span class="fc" id="L104">    }</span>
 
     /**
      * Finds an administrator by ID.
@@ -111,7 +110,7 @@ public class InMemoryRepository {
      * @return the administrator if found, otherwise null
      */
     public Administrator findAdministrator(String adminId) {
-<span class="fc" id="L114">        return admins.get(adminId);</span>
+<span class="fc" id="L113">        return admins.get(adminId);</span>
     }
 
     // ===================== Appointment operations =====================
@@ -122,8 +121,8 @@ public class InMemoryRepository {
      * @param appointment the appointment to save
      */
     public void saveAppointment(Appointment appointment) {
-<span class="fc" id="L125">        appointments.put(appointment.getId(), appointment);</span>
-<span class="fc" id="L126">    }</span>
+<span class="fc" id="L124">        appointments.put(appointment.getId(), appointment);</span>
+<span class="fc" id="L125">    }</span>
 
     /**
      * Finds an appointment by ID.
@@ -132,7 +131,7 @@ public class InMemoryRepository {
      * @return the appointment if found, otherwise null
      */
     public Appointment findAppointment(String id) {
-<span class="fc" id="L135">        return appointments.get(id);</span>
+<span class="fc" id="L134">        return appointments.get(id);</span>
     }
 
     /**
@@ -141,8 +140,8 @@ public class InMemoryRepository {
      * @param id the appointment ID to remove
      */
     public void removeAppointment(String id) {
-<span class="fc" id="L144">        appointments.remove(id);</span>
-<span class="fc" id="L145">    }</span>
+<span class="fc" id="L143">        appointments.remove(id);</span>
+<span class="fc" id="L144">    }</span>
 
     /**
      * Returns all appointments.
@@ -150,7 +149,7 @@ public class InMemoryRepository {
      * @return list of all appointments
      */
     public List&lt;Appointment&gt; getAllAppointments() {
-<span class="fc" id="L153">        return new ArrayList&lt;&gt;(appointments.values());</span>
+<span class="fc" id="L152">        return new ArrayList&lt;&gt;(appointments.values());</span>
     }
 
     /**
@@ -160,9 +159,9 @@ public class InMemoryRepository {
      * @return list of appointments belonging to the user
      */
     public List&lt;Appointment&gt; getUserAppointments(User user) {
-<span class="fc" id="L163">        return appointments.values().stream()</span>
-<span class="fc" id="L164">            .filter(a -&gt; a.getUser().equals(user))</span>
-<span class="fc" id="L165">            .collect(Collectors.toList());</span>
+<span class="fc" id="L162">        return appointments.values().stream()</span>
+<span class="fc" id="L163">            .filter(a -&gt; a.getUser().equals(user))</span>
+<span class="fc" id="L164">            .toList();</span>
     }
 
     // ===================== TimeSlot operations =====================
@@ -173,8 +172,8 @@ public class InMemoryRepository {
      * @param slot the time slot to add
      */
     public void addAvailableTimeSlot(TimeSlot slot) {
-<span class="fc" id="L176">        availableSlots.add(slot);</span>
-<span class="fc" id="L177">    }</span>
+<span class="fc" id="L175">        availableSlots.add(slot);</span>
+<span class="fc" id="L176">    }</span>
 
     /**
      * Returns all available (unbooked) time slots.
@@ -182,9 +181,9 @@ public class InMemoryRepository {
      * @return list of available time slots
      */
     public List&lt;TimeSlot&gt; getAvailableSlots() {
-<span class="fc" id="L185">        return availableSlots.stream()</span>
-<span class="fc" id="L186">            .filter(TimeSlot::isAvailable)</span>
-<span class="fc" id="L187">            .collect(Collectors.toList());</span>
+<span class="fc" id="L184">        return availableSlots.stream()</span>
+<span class="fc" id="L185">            .filter(TimeSlot::isAvailable)</span>
+<span class="fc" id="L186">            .toList();</span>
     }
 
     /**
@@ -193,8 +192,8 @@ public class InMemoryRepository {
      * @param slot the time slot to remove
      */
     public void removeTimeSlot(TimeSlot slot) {
-<span class="fc" id="L196">        availableSlots.remove(slot);</span>
-<span class="fc" id="L197">    }</span>
+<span class="fc" id="L195">        availableSlots.remove(slot);</span>
+<span class="fc" id="L196">    }</span>
 
     /**
      * Checks whether a given time slot overlaps with existing available slots.
@@ -203,8 +202,8 @@ public class InMemoryRepository {
      * @return true if overlapping exists, false otherwise
      */
     public boolean isSlotOverlapping(TimeSlot newSlot) {
-<span class="fc" id="L206">        return availableSlots.stream()</span>
-<span class="pc bpc" id="L207" title="1 of 4 branches missed.">            .anyMatch(slot -&gt; slot.isAvailable() &amp;&amp; slot.overlaps(newSlot));</span>
+<span class="fc" id="L205">        return availableSlots.stream()</span>
+<span class="pc bpc" id="L206" title="1 of 4 branches missed.">            .anyMatch(slot -&gt; slot.isAvailable() &amp;&amp; slot.overlaps(newSlot));</span>
     }
    
 }

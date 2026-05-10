@@ -14,7 +14,8 @@ import com.appointments.domain.Appointment;
  * @author Eman
  * @version 1.0
  */
-public class ParticipantLimitStrategy implements BookingRuleStrategy {
+<span class="fc" id="L17">public class ParticipantLimitStrategy implements BookingRuleStrategy {</span>
+
     /**
      * Validates that the number of participants does not exceed the limit for the appointment type.
      *
@@ -23,26 +24,26 @@ public class ParticipantLimitStrategy implements BookingRuleStrategy {
      */
     @Override
     public boolean isValid(Appointment appointment) {
-<span class="fc" id="L26">        int participantCount = appointment.getParticipants().size();</span>
-        
-<span class="pc bpc" id="L28" title="1 of 5 branches missed.">        switch (appointment.getType()) {</span>
+
+<span class="fc" id="L28">        int participantCount = appointment.getParticipants().size();</span>
+
+<span class="pc bpc" id="L30" title="1 of 5 branches missed.">        switch (appointment.getType()) {</span>
+
             case GROUP:
-<span class="fc bfc" id="L30" title="All 2 branches covered.">                return participantCount &lt;= 10;</span>
+<span class="fc bfc" id="L33" title="All 2 branches covered.">                return participantCount &lt;= 10;</span>
+
             case INDIVIDUAL:
-<span class="fc bfc" id="L32" title="All 2 branches covered.">                return participantCount &lt;= 1;</span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">                return participantCount &lt;= 1;</span>
+
             case IN_PERSON:
-<span class="fc bfc" id="L34" title="All 2 branches covered.">                return participantCount &lt;= 5;</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">                return participantCount &lt;= 5;</span>
+
             case VIRTUAL:
-<span class="fc" id="L36">                return true; </span>
-            
+<span class="fc" id="L42">                return true;</span>
+
             default:
-<span class="nc bnc" id="L39" title="All 2 branches missed.">                return participantCount &lt;= 5;</span>
+<span class="nc bnc" id="L45" title="All 2 branches missed.">                return participantCount &lt;= 5;</span>
         }
     }
-    /**
-     * Default constructor.
-     */
-<span class="fc" id="L45">    public ParticipantLimitStrategy() {</span>
-<span class="fc" id="L46">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

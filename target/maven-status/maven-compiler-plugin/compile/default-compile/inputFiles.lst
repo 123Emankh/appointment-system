@@ -10,7 +10,6 @@ C:\Users\Lenovo\eclipse-workspace\ appointment-system\src\main\java\com\appointm
 C:\Users\Lenovo\eclipse-workspace\ appointment-system\src\main\java\com\appointments\persistence\InMemoryRepository.java
 C:\Users\Lenovo\eclipse-workspace\ appointment-system\src\main\java\com\appointments\persistence\package-info.java
 C:\Users\Lenovo\eclipse-workspace\ appointment-system\src\main\java\com\appointments\service\AppointmentService.java
-C:\Users\Lenovo\eclipse-workspace\ appointment-system\src\main\java\com\appointments\service\AuthenticationService.java
 C:\Users\Lenovo\eclipse-workspace\ appointment-system\src\main\java\com\appointments\service\AuthService.java
 C:\Users\Lenovo\eclipse-workspace\ appointment-system\src\main\java\com\appointments\service\BookingRuleStrategy.java
 C:\Users\Lenovo\eclipse-workspace\ appointment-system\src\main\java\com\appointments\service\DurationRuleStrategy.java

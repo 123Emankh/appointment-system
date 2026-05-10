@@ -1,3 +1,6 @@
+/**
+ * Contains the domain entities and core models of the appointment system.
+ */
 package com.appointments.domain;
 
 /**
