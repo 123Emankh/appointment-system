@@ -3,7 +3,6 @@ package com.appointments.persistence;
 import com.appointments.domain.*;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * In-memory implementation of the repository.
@@ -162,7 +161,7 @@ public class InMemoryRepository {
     public List<Appointment> getUserAppointments(User user) {
         return appointments.values().stream()
             .filter(a -> a.getUser().equals(user))
-            .collect(Collectors.toList());
+            .toList();
     }
 
     // ===================== TimeSlot operations =====================
@@ -184,7 +183,7 @@ public class InMemoryRepository {
     public List<TimeSlot> getAvailableSlots() {
         return availableSlots.stream()
             .filter(TimeSlot::isAvailable)
-            .collect(Collectors.toList());
+            .toList();
     }
 
     /**
