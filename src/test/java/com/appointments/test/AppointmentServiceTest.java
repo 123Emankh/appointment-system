@@ -106,8 +106,11 @@ class AppointmentServiceTest {
         Appointment appointment = createAppointment(oldSlot);
         appointmentService.bookAppointment(appointment);
         
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-            () -> appointmentService.modifyAppointment(appointment.getId(), newSlot));
+        String appointmentId = appointment.getId();
+
+        IllegalArgumentException exception =
+            assertThrows(IllegalArgumentException.class,
+                () -> appointmentService.modifyAppointment(appointmentId, newSlot));
         
         assertEquals("New time slot is not available.", exception.getMessage());
     }
